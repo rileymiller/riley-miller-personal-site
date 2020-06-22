@@ -5,7 +5,7 @@ import { GLOBAL_COLORS } from "../utils/colors"
 import { rhythm, scale } from "../utils/typography"
 
 type Props = {
-  location: Location
+  location?: Location | string
   title: string
   children?: any
 }

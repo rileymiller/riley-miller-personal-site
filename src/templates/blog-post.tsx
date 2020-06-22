@@ -24,7 +24,7 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
   const { previous, next } = pageContext
 
   return (
-    <Layout location={window.location} title={siteTitle}>
+    <Layout location={typeof window !== `undefined` ? window.location : ''} title={siteTitle}>
       <SEO
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}

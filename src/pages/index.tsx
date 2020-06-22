@@ -36,7 +36,7 @@ const BlogIndex = ({ data }: Props) => {
         `
         }
       />
-      <Layout location={window.location} title={siteTitle}>
+      <Layout location={typeof window !== `undefined` ? window.location : ''} title={siteTitle}>
         <SEO title="Bio" />
         <Bio />
         {/* {posts.map(({ node }) => {
