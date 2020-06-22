@@ -4,6 +4,9 @@ import { Link, graphql } from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import { Global, css } from "@emotion/core"
+import { GLOBAL_COLORS } from "../utils/colors"
+
 import { rhythm } from "../utils/typography"
 
 type Props = {
@@ -22,10 +25,21 @@ const BlogIndex = ({ data }: Props) => {
   const posts = data.allMarkdownRemark.edges
 
   return (
-    <Layout location={window.location} title={siteTitle}>
-      <SEO title="All posts" />
-      <Bio />
-      {posts.map(({ node }) => {
+    <>
+      <Global
+        styles={
+          css`
+            a {
+              color: ${GLOBAL_COLORS.bg_primary};
+              box-shadow:none;
+            }
+        `
+        }
+      />
+      <Layout location={window.location} title={siteTitle}>
+        <SEO title="Bio" />
+        <Bio />
+        {/* {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         return (
           <div key={node.fields.slug}>
@@ -46,8 +60,9 @@ const BlogIndex = ({ data }: Props) => {
             />
           </div>
         )
-      })}
-    </Layout>
+      })} */}
+      </Layout>
+    </>
   )
 }
 

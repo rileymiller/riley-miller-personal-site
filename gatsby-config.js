@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Riley Miller`,
+    title: `Riley's Digital Garden 🌴`,
     author: `Riley Miller`,
-    description: `A starter blog demonstrating what Riley can do with Gatsby`,
+    description: `Riley's Digital Garden for life career stuff`,
     siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
     social: {
       twitter: `riley_miller00`,

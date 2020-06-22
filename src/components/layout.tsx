@@ -1,6 +1,7 @@
 import React from "react"
+import style from "@emotion/styled"
 import { Link } from "gatsby"
-
+import { GLOBAL_COLORS } from "../utils/colors"
 import { rhythm, scale } from "../utils/typography"
 
 type Props = {
@@ -9,52 +10,49 @@ type Props = {
   children?: any
 }
 
+const TitleLink = style(Link)({
+  boxShadow: `none`,
+  textDecoration: `none`,
+  color: `inherit`,
+  [`:hover`]: {
+    color: `${GLOBAL_COLORS.bg_primary}`
+  }
+})
+
+const RootTitle = style.h1({
+  ...scale(1.5),
+  marginBottom: rhythm(1.5),
+  marginTop: 0,
+})
+
+const SecondaryTitle = style.h3({
+  fontFamily: `Montserrat, sans-serif`,
+  marginTop: 0,
+})
+
 const Layout = ({ location, title, children }: Props) => {
   const rootPath = `${__PATH_PREFIX__}/`
-  let header
 
-  if (location.pathname === rootPath) {
-    header = (
-      <h1
-        style={{
-          ...scale(1.5),
-          marginBottom: rhythm(1.5),
-          marginTop: 0,
-        }}
+  const RootHeader = () => (
+    <RootTitle>
+      <TitleLink
+        to={`/`}
       >
-        <Link
-          style={{
-            boxShadow: `none`,
-            textDecoration: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
-      </h1>
-    )
-  } else {
-    header = (
-      <h3
-        style={{
-          fontFamily: `Montserrat, sans-serif`,
-          marginTop: 0,
-        }}
+        {title}
+      </TitleLink>
+    </RootTitle>
+  )
+
+  const SecondaryHeader = () => (
+    <SecondaryTitle>
+      <TitleLink
+        to={`/`}
       >
-        <Link
-          style={{
-            boxShadow: `none`,
-            textDecoration: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
-      </h3>
-    )
-  }
+        {title}
+      </TitleLink>
+    </SecondaryTitle>
+  )
+
 
   return (
     <div
@@ -65,12 +63,11 @@ const Layout = ({ location, title, children }: Props) => {
         padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
       }}
     >
-      <header>{header}</header>
+      <header>{(location.pathname === rootPath) ? <RootHeader /> : <SecondaryHeader />}</header>
       <main>{children}</main>
       <footer>
-        © {new Date().getFullYear()}, Built with
+        © {new Date().getFullYear()}, Authored with ❤️ by Riley
         {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
       </footer>
     </div>
   )
