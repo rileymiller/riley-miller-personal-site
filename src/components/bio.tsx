@@ -43,7 +43,11 @@ const Bio = () => {
 
   const ProfileContainer = styled.div({
     display: `flex`,
-    alignItems: `center`,
+    alignItems: `flex-end`,
+    [`@media (max-width: 420px)`]: {
+      alignItems: `flex-start`,
+      marginBottom: rhythm(.5)
+    },
     marginBottom: rhythm(1.5)
 
   })
@@ -86,8 +90,8 @@ const Bio = () => {
         <p>
           This site is designed to hold some of the thoughts that I have developed over the years with notes on technology, starting a company,
           software development, and anything that I find interesting. The idea behind having a <a target={`_blank`}
-            href={`https://joelhooks.com/digital-garden`}>Digital Garden</a> is to focus more on developing valuable content and then amending it
-            as I build out and expand upon my ideas instead of hyper-analyzing my work until it's picture-perfect.
+            href={`https://joelhooks.com/digital-garden`}>Digital Garden</a> is to focus on the development and curation of valuable content,
+            instead of waiting for my work to be picture-perfect.
         </p>
 
         <p>

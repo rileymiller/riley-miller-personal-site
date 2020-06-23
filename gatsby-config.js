@@ -3,7 +3,7 @@ module.exports = {
     title: `Riley's Digital Garden 🌴`,
     author: `Riley Miller`,
     description: `Riley's Digital Garden for life career stuff`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    siteUrl: `https://www.rileymiller.dev/`,
     social: {
       twitter: `riley_miller00`,
     },
@@ -63,7 +63,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
+        icon: `src/images/rm-bg-icon.png`,
       },
     },
     `gatsby-plugin-react-helmet`,
