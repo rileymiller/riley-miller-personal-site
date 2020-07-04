@@ -1,35 +1,50 @@
-# C++ Objects and Classes
+---
+title: Objects and Classes in C++
+date: "2020-07-03"
+description: A short explanation of objects and classes in C++
+---
 
-C++ is an object-oriented language and objects and classes are the primary data structure for manipulating data in the programming language.
+C++ is an object-oriented language.
 
-## Classes
-Classes are used as an instruction manual for what type of data can be bounded to a specific instance of a class. 
+Pretty much everything in C++ revolves around the representation of data as **classes** and their instantiation, **objects**.
 
-## Objects
-The specific instance of a class is an object, and every object that is instantiated has the same rules and specifications of how to behave as every other object instantiated from the same class. Although the object is stored in a different location in memory, and may have its data members set to different values, all objects of the same class will be bounded by the same rules as all of the other objects from the same class.
+Classes have **attributes** and **methods** that are used to represent the specific type of data that a class contains and how that data can be manipulated and mutated.
 
-## Recipe 🍜
-Another way to think about this paradigm is that a _class_ is like a recipe. A recipe specifies the specific ingredients, the quantity of the ingredients, and how to mix them together, and in which order. Whereas, the _object_ is the physical manifestation of the recipe, the product of the recipe.
+Class attributes are typically referred to as **variables** and class methods are referred to as **functions**. Together, the data model of attributes and methods are referred to as **class members** in C++.
 
+One way to think about classes in C++ is as a recipe. Recipes are used to create food much like classes are used to instantiate objects. The recipe by itself doesn't actually amount to anything unless you decide to buy the ingredients (resource allocation) and put the recipe together (instantiate an object of a class). Like in recipes, you can decide to cook a recipe as many times as you'd like just like we can instantiate as many objects as we'd like of a specific class. Overseeing this process are the developers. Much like a first-rate chef curating their own recipes to perfection, developers define and refine classes to express their ideas and to write beautiful code.
+
+## How to Declare a Class
+To declare a class in C++ there are several methodologies.
+
+You can either write the class definition in a header file, `.h`, and use the [linker](https://www.learncpp.com/cpp-tutorial/introduction-to-the-compiler-linker-and-libraries/) to connect the class definition to a class `.cpp` file where implementation lives. An example of this style of class definition can be found in this [repo](https://github.com/rileymiller/riley-miller-personal-site/tree/master/content/blog/c%2B%2B-objects-classes).
+
+Or you can keep the class implementation coupled to the class definition and declare the class methods within the definition itself. Below is an example of the inline class definition.
 ```cpp
-// MeatballSub.h
 class MeatballSub {
   public:
-    // Default Constructor
-    MeatballSub();
+    void PrintMeatballMessage() {
+      cout << "This is a savory sandwich" << endl;
+    }
+}
 
-    // Constructor
-    MeatballSub(int, int, int, string);
+int main() {
+  // Instantiate a Meatball Sub
+  MeatballSub lunch;
 
-    // Member Functions
-    int getMeatballs();
-    void setMeatballs(int);
+  // Print the Meatball message
+  lunch.PrintMeatballMessage()
 
-  private:
-    int _meatballs;
-    int _ouncesMarinara;
-    int _cheeseSlices;
-    string _typeBread;
-
+  return 0;
 }
 ```
+After compiling this program successfully and running the executable, the following output will be generated:
+```shell
+This is a savory sandwich
+```
+
+This program will print out the message defined in the class method `PrintMeatballMessage()` and return an exit code of 0 so that the Operating System knows that the program completed succcessfully. 
+
+Classes are an extremely powerful primitive built into the C++ programming language and are the primary means of data representation in the object-oriented langauge.
+
+Classes are also commonly leveraged as building blocks of complex data structures and other abstractions to allow programmers to solve all sorts of different challenges.
