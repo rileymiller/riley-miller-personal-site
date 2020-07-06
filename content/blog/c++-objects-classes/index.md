@@ -40,7 +40,10 @@ int main() {
 ```
 After compiling this program successfully and running the executable, the following output will be generated:
 ```shell
+$ ./lunch
 This is a savory sandwich
+$ echo $?
+0
 ```
 
 This program will print out the message defined in the class method `PrintMeatballMessage()` and return an exit code of 0 so that the Operating System knows that the program completed succcessfully. 

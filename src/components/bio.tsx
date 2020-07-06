@@ -13,7 +13,7 @@ import styled from "@emotion/styled"
 import { rhythm } from "../utils/typography"
 
 export const UnorderedList = styled.ul({
-  listStylePosition: `inside`
+  // listStylePosition: `inside`
 })
 
 export const IntroSection = () => (
@@ -76,10 +76,25 @@ export const IntroSection = () => (
       I'm currently teaching an online section of Data Structures at Colorado School of Mines and will be adding some
       articles to provide supplementary materials to my students if you're interested in learning any C++. 👇
     </p>
-    <strong>C++ Articles</strong>
+    <h2>C++ Articles</h2>
     <UnorderedList>
       <li>
         <a href="/c++-objects-classes">Objects and Classes in C++</a>
+      </li>
+      <li>
+        <a href="/c++-inheritance-subclass-definition">C++ Inheritance: Subclass Definition (Pt. 1)</a>
+      </li>
+      <li>
+        <a href="/c++-inheritance-protected-members">C++ Inheritance: Protected Member Access (Pt. 2)</a>
+      </li>
+      <li>
+        <a href="/c++-inheritance-relationship">C++ Inheritance: Inheritance Access Levels (Pt. 3)</a>
+      </li>
+      <li>
+        <a href="/c++-inheritance-base-class-override">C++ Inheritance: Overriding Base Class Methods (Pt. 4)</a>
+      </li>
+      <li>
+        <a href="/c++-inheritance-polymorphism">C++ Inheritance: Polymorphism (Pt. 5)</a>
       </li>
     </UnorderedList>
 
