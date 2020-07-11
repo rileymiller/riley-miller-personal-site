@@ -100,3 +100,5 @@ Using the class definition above, the _public_ and _protected_ members of `Monst
 - [C++ Inheritance: Subclass Definition (Pt. 1)](../c++-inheritance-subclass-definition)
 - [C++ Inheritance: Protected Member Access (Pt. 2)](../c++-inheritance-protected-members)
 - [C++ Inheritance: Overriding Base Class Methods (Pt. 4)](../c++-inheritance-base-class-override)
+- [C++ Inheritance: Polymorphism (Pt. 5)](../c++-inheritance-polymorphism)
+

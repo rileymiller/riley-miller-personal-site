@@ -196,3 +196,9 @@ class Wumpus : public Monster {
 ```
 
 **IMPORTANT!!** Whenever a base class implements a pure virtual method, **this class cannot be instantiated as an object**, this class is called an **abstract base class** and is used to define a set of common attributes and methods that each subclass should define.
+
+## C++ Inheritance Articles
+- [C++ Inheritance: Subclass Definition (Pt. 1)](../c++-inheritance-subclass-definition)
+- [C++ Inheritance: Protected Member Access (Pt. 2)](../c++-inheritance-protected-members)
+- [C++ Inheritance: Inheritance Access Levels (Pt. 3)](../c++-inheritance-relationship)
+- [C++ Inheritance: Overriding Base Class Methods (Pt. 4)](../c++-inheritance-base-class-override)

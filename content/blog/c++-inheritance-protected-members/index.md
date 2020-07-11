@@ -82,3 +82,4 @@ However, as shown when trying to access and modify the _protected_ attribute in 
 - [C++ Inheritance: Subclass Definition (Pt. 1)](../c++-inheritance-subclass-definition)
 - [C++ Inheritance: Inheritance Access Levels (Pt. 3)](../c++-inheritance-relationship)
 - [C++ Inheritance: Overriding Base Class Methods (Pt. 4)](../c++-inheritance-base-class-override)
+- [C++ Inheritance: Polymorphism (Pt. 5)](../c++-inheritance-polymorphism)

@@ -88,3 +88,4 @@ $ echo $?
 - [C++ Inheritance: Subclass Definition (Pt. 1)](../c++-inheritance-subclass-definition)
 - [C++ Inheritance: Protected Member Access (Pt. 2)](../c++-inheritance-protected-members)
 - [C++ Inheritance: Inheritance Access Levels (Pt. 3)](../c++-inheritance-relationship)
+- [C++ Inheritance: Polymorphism (Pt. 5)](../c++-inheritance-polymorphism)

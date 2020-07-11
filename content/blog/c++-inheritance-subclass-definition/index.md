@@ -53,3 +53,4 @@ In this case the Wumpus _inherits_ all of the public members of the base class, 
 - [C++ Inheritance: Protected Member Access (Pt. 2)](../c++-inheritance-protected-members)
 - [C++ Inheritance: Inheritance Access Levels (Pt. 3)](../c++-inheritance-relationship)
 - [C++ Inheritance: Overriding Base Class Methods (Pt. 4)](../c++-inheritance-base-class-override)
+- [C++ Inheritance: Polymorphism (Pt. 5)](../c++-inheritance-polymorphism)
