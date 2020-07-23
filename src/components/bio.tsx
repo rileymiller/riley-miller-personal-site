@@ -97,10 +97,10 @@ export const IntroSection = () => (
         <a href="/c++-inheritance-polymorphism">C++ Inheritance: Polymorphism (Pt. 5)</a>
       </li>
       <li>
-        <a href="/c++-pointers">C++ Pointers (In Progress 🚧)</a>
+        <a href="/c++-stl-set">C++ STL Sets</a>
       </li>
       <li>
-        <a href="/c++-stl-set">C++ STL Sets (In Progress 🚧)</a>
+        <a href="/c++-pointers">C++ Pointers (In Progress 🚧)</a>
       </li>
     </UnorderedList>
 

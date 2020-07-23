@@ -1,7 +1,7 @@
 #include <iostream>
 #include <set>
 
-// Prints an unordered_set
+// Prints a set
 template <class T>
 void printSet(std::string label, std::set<T> s) {
     std::cout << label << std::endl;
@@ -15,6 +15,14 @@ void printSet(std::string label, std::set<T> s) {
     s.begin();
 }
 
+template <class S>
+void checkIfFound(std::set<S> s, S search) {
+    if(s.find(search) != s.end()) {
+        std::cout << "Found char: " << search << std::endl;
+    } else {
+        std::cout << "Did not find char.." << std::endl;
+    }
+}
 int main() {
     std::set<int> firstThree = { 1, 2, 3};
 
@@ -41,5 +49,9 @@ int main() {
                    *alphabet.find('o'), *alphabet.find('u')});
 
     printSet("Printing vowels...", vowels);
+
+    checkIfFound(vowels, 'a');
+    checkIfFound(vowels, 'x');
+
     return 0;
 }
