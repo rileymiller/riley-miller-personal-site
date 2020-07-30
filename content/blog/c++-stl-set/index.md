@@ -3,6 +3,9 @@ title: "C++ STL Sets & Iterators"
 date: "2020-07-22"
 description: C++ STL Sets and Iterators
 featuredImage: "../../assets/sets-timj.jpg"
+featuredImageDescription: "Photo from Unsplash by"
+photographerName: "timJ"
+photographerLink: "https://unsplash.com/@the_roaming_platypus"
 ---
 > [Code](https://github.com/rileymiller/riley-miller-personal-site/blob/master/content/blog/c%2B%2B-stl-set/main.cpp) referenced in article.
 
@@ -47,10 +50,10 @@ void checkIfFound(std::set<S> s, S search) {
 }
 
 int main() {
-std::set<char> vowels = { 'a', 'e', 'i', 'o', 'u'};
+    std::set<char> vowels = { 'a', 'e', 'i', 'o', 'u'};
 
-checkIfFound(vowels, 'a');
-checkIfFound(vowels, 'x');
+    checkIfFound(vowels, 'a');
+    checkIfFound(vowels, 'x');
 return 0;
 }
 ```

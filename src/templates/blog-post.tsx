@@ -23,8 +23,11 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata.title
   const featuredImgFluid = post.frontmatter?.featuredImage?.childImageSharp?.fluid ?? null
-  const { previous, next } = pageContext
+  const featuredImgDescription = post.frontmatter?.featuredImageDescription ?? null
+  const photographerLink = post.frontmatter?.photographerLink ?? null
+  const photographerName = post.frontmatter?.photographerName ?? null
 
+  const { previous, next } = pageContext
   return (
     <Layout location={typeof window !== `undefined` ? window.location : ''} title={siteTitle}>
       <SEO
@@ -34,24 +37,41 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
       <h1
         style={{
           marginTop: rhythm(1),
-          marginBottom: 0,
+          marginBottom: rhythm(.1),
         }}
       >
         {post.frontmatter.title}
       </h1>
-      <Img style={{
-        marginTop: rhythm(1),
-        marginBottom: rhythm(.3)
-      }} fluid={featuredImgFluid} />
       <p
         style={{
           ...scale(-1 / 5),
           display: `block`,
-          marginBottom: rhythm(1),
+          marginBottom: rhythm(.1)
         }}
       >
         {post.frontmatter.date}
       </p>
+      {featuredImgFluid ? <Img style={{
+        marginTop: rhythm(.2),
+        marginBottom: rhythm(.3)
+      }} fluid={featuredImgFluid} />
+        : null}
+      {(featuredImgDescription && photographerName && photographerLink) ?
+        <p style={{
+          // fontSize: rhythm
+          marginBottom: rhythm(1),
+          display: `flex`,
+          fontWeight: `bold`,
+          justifyContent: `center`
+        }}>
+          <div>{featuredImgDescription}</div>
+          <a
+            style={{
+              marginLeft: rhythm(.2)
+            }}
+            href={photographerLink}>{photographerName}</a>
+        </p> : null
+      }
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <hr
         style={{
@@ -113,6 +133,9 @@ export const pageQuery = graphql`
             }
           }
         }
+      featuredImageDescription
+      photographerLink
+      photographerName
       }
     }
   }
