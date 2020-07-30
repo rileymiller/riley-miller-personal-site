@@ -22,7 +22,7 @@ interface Props {
 const BlogPostTemplate = ({ data, pageContext }: Props) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata.title
-  const featuredImgFluid = post.frontmatter.featuredImage.childImageSharp.fluid
+  const featuredImgFluid = post.frontmatter?.featuredImage?.childImageSharp?.fluid ?? null
   const { previous, next } = pageContext
 
   return (
