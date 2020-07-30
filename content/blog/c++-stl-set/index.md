@@ -1,5 +1,10 @@
-# C++ STL Sets
-[Code](https://github.com/rileymiller/riley-miller-personal-site/blob/master/content/blog/c%2B%2B-stl-set/main.cpp) referenced in article.
+---
+title: "C++ STL Sets & Iterators"
+date: "2020-07-22"
+description: C++ STL Sets and Iterators
+featuredImage: "../../assets/sets-timj.jpg"
+---
+> [Code](https://github.com/rileymiller/riley-miller-personal-site/blob/master/content/blog/c%2B%2B-stl-set/main.cpp) referenced in article.
 
 The Set data structure in C++ is a container used to hold unique values following a specific order. Contrary to **index-based** data structures
 like **arrays** and **vectors**, sets are **key-based** data structures.
@@ -112,8 +117,3 @@ a   e   i   o   u
 $ echo $?
 0
 ```
-
-### Program Illustration
-
-Here is the handout for the Program Illustration 👇🏻
-![Set Iteration Illustration](./c++-sets-altogether.png)
