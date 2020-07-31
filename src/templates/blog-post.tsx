@@ -51,7 +51,7 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
       >
         {post.frontmatter.date}
       </p>
-      <Img
+      {/* <Img
         style={{
           marginTop: rhythm(.2),
           marginBottom: rhythm(.3)
@@ -72,7 +72,7 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
             marginLeft: rhythm(.2)
           }}
           href={photographerLink}>{photographerName}</a>
-      </p>
+      </p> */}
 
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <hr
