@@ -66,12 +66,14 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
           fontWeight: `bold`,
           justifyContent: `center`
         }}>
-          {featuredImageDescription}
-          {/* <a
+          {featuredImageDescription
+
+          }
+          <a
             style={{
               marginLeft: rhythm(.2)
             }}
-            href={photographerLink}>{photographerName}</a> */}
+            href={photographerLink}>{photographerName}</a>
         </p>
       }
 
