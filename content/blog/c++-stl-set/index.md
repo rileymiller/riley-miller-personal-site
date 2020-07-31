@@ -4,8 +4,8 @@ date: "2020-07-22"
 description: C++ STL Sets and Iterators
 featuredImage: "../../assets/sets-timj.jpg"
 featuredImageDescription: "Photo from Unsplash by"
-photographerName: "timJ"
 photographerLink: "https://unsplash.com/@the_roaming_platypus"
+photographerName: "timJ"
 ---
 > [Code](https://github.com/rileymiller/riley-miller-personal-site/blob/master/content/blog/c%2B%2B-stl-set/main.cpp) referenced in article.
 

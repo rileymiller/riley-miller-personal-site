@@ -23,7 +23,7 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata.title
   const featuredImgFluid = post.frontmatter?.featuredImage?.childImageSharp?.fluid
-  const featuredImgDescription = post.frontmatter?.featuredImageDescription
+  const featuredImageDescription = post.frontmatter?.featuredImageDescription
   const photographerLink = post.frontmatter?.photographerLink
   const photographerName = post.frontmatter?.photographerName
 
@@ -58,7 +58,7 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
         }}
         fluid={featuredImgFluid}
       />}
-      {featuredImgDescription &&
+      {featuredImageDescription &&
         <p style={{
           // fontSize: rhythm
           marginBottom: rhythm(1),
@@ -66,7 +66,7 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
           fontWeight: `bold`,
           justifyContent: `center`
         }}>
-          <div>{featuredImgDescription}</div>
+          featuredImageDescription
           {/* <a
             style={{
               marginLeft: rhythm(.2)
