@@ -22,10 +22,10 @@ interface Props {
 const BlogPostTemplate = ({ data, pageContext }: Props) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata.title
-  const featuredImgFluid = post.frontmatter?.featuredImage?.childImageSharp?.fluid ?? null
-  const featuredImgDescription = post.frontmatter?.featuredImageDescription ?? null
-  const photographerLink = post.frontmatter?.photographerLink ?? null
-  const photographerName = post.frontmatter?.photographerName ?? null
+  const featuredImgFluid = post.frontmatter?.featuredImage?.childImageSharp?.fluid
+  const featuredImgDescription = post.frontmatter?.featuredImageDescription
+  const photographerLink = post.frontmatter?.photographerLink
+  const photographerName = post.frontmatter?.photographerName
 
   const { previous, next } = pageContext
   return (
@@ -51,28 +51,29 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
       >
         {post.frontmatter.date}
       </p>
-      {featuredImgFluid ? <Img style={{
-        marginTop: rhythm(.2),
-        marginBottom: rhythm(.3)
-      }} fluid={featuredImgFluid} />
-        : null}
+      {featuredImgFluid && <Img
+        style={{
+          marginTop: rhythm(.2),
+          marginBottom: rhythm(.3)
+        }}
+        fluid={featuredImgFluid}
+      />}
 
-      {featuredImgDescription ?
-        (<p style={{
-          // fontSize: rhythm
-          marginBottom: rhythm(1),
-          display: `flex`,
-          fontWeight: `bold`,
-          justifyContent: `center`
-        }}>
-          <div>{featuredImgDescription}</div>
-          <a
-            style={{
-              marginLeft: rhythm(.2)
-            }}
-            href={photographerLink}>{photographerName}</a>
-        </p>) : null
-      }
+      <p style={{
+        // fontSize: rhythm
+        marginBottom: rhythm(1),
+        display: `flex`,
+        fontWeight: `bold`,
+        justifyContent: `center`
+      }}>
+        <div>{featuredImgDescription}</div>
+        <a
+          style={{
+            marginLeft: rhythm(.2)
+          }}
+          href={photographerLink}>{photographerName}</a>
+      </p>
+
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <hr
         style={{
