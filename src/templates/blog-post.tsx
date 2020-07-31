@@ -60,10 +60,9 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
       />}
       {featuredImageDescription &&
         <p style={{
-          // fontSize: rhythm
           marginBottom: rhythm(1),
           display: `flex`,
-          fontWeight: `bold`,
+          fontStyle: `italic`,
           justifyContent: `center`
         }}>
           {featuredImageDescription
