@@ -58,21 +58,21 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
         }}
         fluid={featuredImgFluid}
       />}
-      {/*
-      <p style={{
-        // fontSize: rhythm
-        marginBottom: rhythm(1),
-        display: `flex`,
-        fontWeight: `bold`,
-        justifyContent: `center`
-      }}>
-        <div>{featuredImgDescription}</div>
-        <a
-          style={{
-            marginLeft: rhythm(.2)
-          }}
-          href={photographerLink}>{photographerName}</a>
-      </p> */}
+      {featuredImgDescription &&
+        <p style={{
+          // fontSize: rhythm
+          marginBottom: rhythm(1),
+          display: `flex`,
+          fontWeight: `bold`,
+          justifyContent: `center`
+        }}>
+          <div>{featuredImgDescription}</div>
+          <a
+            style={{
+              marginLeft: rhythm(.2)
+            }}
+            href={photographerLink}>{photographerName}</a>
+        </p>}
 
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <hr
