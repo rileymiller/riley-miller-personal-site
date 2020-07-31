@@ -56,8 +56,9 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
         marginBottom: rhythm(.3)
       }} fluid={featuredImgFluid} />
         : null}
-      {(featuredImgDescription && photographerName && photographerLink) ?
-        <p style={{
+
+      {featuredImgDescription ?
+        (<p style={{
           // fontSize: rhythm
           marginBottom: rhythm(1),
           display: `flex`,
@@ -70,7 +71,7 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
               marginLeft: rhythm(.2)
             }}
             href={photographerLink}>{photographerName}</a>
-        </p> : null
+        </p>) : null
       }
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <hr
