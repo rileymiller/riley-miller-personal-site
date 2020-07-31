@@ -51,13 +51,13 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
       >
         {post.frontmatter.date}
       </p>
-      {featuredImgFluid && <Img
+      <Img
         style={{
           marginTop: rhythm(.2),
           marginBottom: rhythm(.3)
         }}
         fluid={featuredImgFluid}
-      />}
+      />
 
       <p style={{
         // fontSize: rhythm
