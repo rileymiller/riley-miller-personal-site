@@ -65,9 +65,9 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
           display: `flex`,
           fontWeight: `bold`,
           justifyContent: `center`
-        }}>yello
-          {/* <div>{featuredImgDescription}</div>
-          <a
+        }}>
+          <div>{featuredImgDescription}</div>
+          {/* <a
             style={{
               marginLeft: rhythm(.2)
             }}
