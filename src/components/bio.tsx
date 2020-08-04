@@ -102,6 +102,9 @@ export const IntroSection = () => (
       <li>
         <a href="/c++-pointers">C++ Pointers</a>
       </li>
+      <li>
+        <a href="/c++-big-o-complexity">Big O Complexity</a>
+      </li>
     </UnorderedList>
 
   </section>
