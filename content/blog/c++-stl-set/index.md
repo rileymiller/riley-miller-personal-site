@@ -110,7 +110,7 @@ The iterator address is now equal to the end iterator address so we break out of
 
 ![Step 7 of Set Iteration](./set-iteration-step-7.png)
 
-The program will now clean up the iterator defined in the loop control as show in the left side of the memory frame.
+The program will now clean up the iterator defined in the loop control as shown in the left side of the memory frame.
 
 ### Output
 This code snippet prints out the contents of the set as shown below:
