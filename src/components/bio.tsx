@@ -100,7 +100,7 @@ export const IntroSection = () => (
         <a href="/c++-stl-set">C++ STL Sets</a>
       </li>
       <li>
-        <a href="/c++-pointers">C++ Pointers (In Progress 🚧)</a>
+        <a href="/c++-pointers">C++ Pointers</a>
       </li>
     </UnorderedList>
 
