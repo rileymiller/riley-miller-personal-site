@@ -17,7 +17,9 @@ Pointers usually get a bad rap for being confusing or "dangerous" but once you d
 The C++ [docs](http://www.cplusplus.com/doc/tutorial/pointers/) broke pointers down in a way that I really liked focusing on two commonly used operators when working with pointers: `*` and `&`.
 
 ## Pointer Initialization
-When starting with pointers, I've found that the easiest way to begin is by describing how to initialize them.
+Pointers are a data type that are used to store the memory addresses of other data types.
+To initialize a pointer declare the data type, use the `*` operator, and then give the pointer
+a name like the example below.
 
 ```cpp
 int * x;
