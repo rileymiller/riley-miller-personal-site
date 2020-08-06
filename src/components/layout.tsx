@@ -104,12 +104,19 @@ const Layout = ({ location, title, children }: Props) => {
       }}
     >
       <header>{(location.pathname === rootPath) ? <RootHeader /> : <SecondaryHeader />}</header>
-      <main>{children}</main>
+      <main
+        css={css`
+        ul li {
+          list-style-position: outside;
+          margin-left: 1em;
+        }
+        `}
+      >{children}</main>
       <footer>
         © {new Date().getFullYear()}, Authored with ❤️ by Riley
         {` `}
       </footer>
-    </div>
+    </div >
   )
 }
 
