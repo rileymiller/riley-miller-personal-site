@@ -58,7 +58,7 @@ export const IntroSection = () => (
 
     <p>
       I work with a lot of different technologies during the course of my week and have worked with many others in the past. I'm currently interested in TypeScript, React,
-      React Native, Jenkins, Docker, C++, Bash, JavaScript Testing (Jest, Cypress, @testing-library), TensorFlow, Node.js, Python, and Arch Linux.
+      React Native, Jenkins, Docker, C++, Bash, JavaScript Testing (Jest, Cypress, Selenium, @testing-library), TensorFlow, Node.js, Python, and Arch Linux.
     </p>
 
 
@@ -77,7 +77,7 @@ export const IntroSection = () => (
     </p>
 
     <p>
-      I'm currently teaching an online section of Data Structures at Colorado School of Mines and will be adding some
+      I'm just finished teaching an online section of Data Structures at Colorado School of Mines and wrote some
       articles to provide supplementary materials to my students if you're interested in learning any C++. 👇
     </p>
     <h2>C++ Articles</h2>
@@ -105,9 +105,6 @@ export const IntroSection = () => (
       </li>
       <li>
         <a href="/c++-pointers">C++ Pointers</a>
-      </li>
-      <li>
-        <a href="/c++-big-o-complexity">Big O Complexity</a>
       </li>
     </UnorderedList>
 
