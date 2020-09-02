@@ -9,3 +9,8 @@ CS and these companies are considered to hire the most talented engineers. I str
 
 This document will hold my plan for preparing for interviews, links to topics I've learned to prepare, as well 
 as document my experience of interviewing at these companies.
+
+
+9/1/2020
+Found out I'm going to have a chance to start owning our HTML generation microservice which is written in Java so hopefully I can
+leverage that to get some more exposure to different parts of the stack and further my skills
