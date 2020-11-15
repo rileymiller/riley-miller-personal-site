@@ -73,10 +73,6 @@ export const IntroSection = () => (
     </p>
 
     <p>
-      Here is <a href="/learning-list"> my list </a> of things I'm either currently learning or am intereseted in learning.
-    </p>
-
-    <p>
       I'm just finished teaching an online section of Data Structures at Colorado School of Mines and wrote some
       articles to provide supplementary materials to my students if you're interested in learning any C++. 👇
     </p>
