@@ -103,7 +103,13 @@ export const IntroSection = () => (
         <a href="/c++-pointers">C++ Pointers</a>
       </li>
     </UnorderedList>
-
+    <h2>Java Articles</h2>
+    <li>
+      <a href="/java-solid-principles-spring-boot-pt1">SOLID Principles in Spring Boot Setup</a>
+    </li>
+    <li>
+      <a href="/java-solid-principles-spring-boot-pt2">SOLID Principles in Spring Boot Assignment Pt. 1</a>
+    </li>
   </section>
 )
 
