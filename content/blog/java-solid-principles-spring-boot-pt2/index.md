@@ -1,5 +1,5 @@
 ---
-title: "SOLID Principles in Spring Boot: Assignment Pt. 1"
+title: "SOLID Principles in Spring Boot: Single Responsibility Principle & Liskov Substitution Principle"
 date: "2020-11-23"
 description: Object-oriented SOLID principles in the context of Spring Boot Assignment Pt. 1
 featuredImage: "../../assets/spring-boot/spring-boot-2-mtns.jpg"
@@ -120,7 +120,7 @@ describes and endpoint that should be made available over the web.
 
 Inside the class there are three methods defined with a `@GetMapping(...)` annotation. This `@GetMapping(...)` annotation let's Spring know that whenever the [route](https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/) defined inside of the `@GetMapping(...)` is reached via HTTP - GET, the method defined for the route will be invoked to process the HTTP request.
 
-If you take a look at the `transaction/` endpoint, you will notice it's a little different than the other two. Inside the method signature you will see `@RequestParam(value = "value", defaultValue = "0" ) String value` defined. `@RequestParam` is another special annotation that is used to tell Spring that there is a [HTTP parameter](https://www.tutorialspoint.com/http/http_parameters.htm) that is expected to be passed to the endpoint. Inside the annotation there are two paremeters, the first is the key of the parameter that is being passed as apart of the HTTP - GET request (called "value" in this endpoint), and the second parameter is the default value in case an explicit parameter is not set as part of the request. Then outside of the annotation you can see `String value` also defined as part of the method signature. Essentially what is happening here, Spring is parsing the HTTP - GET request and if a parameter specified as `value` is passed in, it will serialize the request and store the value in the locally scoped parameter `String value` which can be used inside the scope of the method. 
+If you take a look at the `transaction/` endpoint, you will notice it's a little different than the other two. Inside the method signature you will see `@RequestParam(value = "value", defaultValue = "0" ) String value` defined. `@RequestParam` is another special annotation that is used to tell Spring that there is a [HTTP parameter](https://www.tutorialspoint.com/http/http_parameters.htm) that is expected to be passed to the endpoint. Inside the annotation there are two paremeters, the first is the key of the parameter that is being passed as part of the HTTP - GET request (called "value" in this endpoint), and the second parameter is the default value in case an explicit parameter is not set as part of the request. Then outside of the annotation you can see `String value` also defined as part of the method signature. Essentially what is happening here, Spring is parsing the HTTP - GET request and if a parameter specified as `value` is passed in, it will serialize the request and store the value in the locally scoped parameter `String value` which can be used inside the scope of the method. 
 
 For each of the endpoints defined inside of the `DigitalWalletController`, you can see that they all have a return type of a class named `DigitalWallet`. This return type is used to serialize a Java object into an HTTP response using a Java library called [Jackson2](https://github.com/FasterXML/jackson) that is configured automatically in Spring Boot. This process of serialization is essentially the conversion of a Java object to [JSON](https://www.w3schools.com/whatis/whatis_json.asp), or a format that clients (mobile/web) can recieve and process from our server.
 
@@ -221,7 +221,7 @@ If you navigate to `http://localhost:8080/balance` in the browser, it will fetch
 ```
 {"name":"Bitcoin","btc":0.0,"whitePaper":"https://bitcoin.org/bitcoin.pdf","satoshis":0.0}
 ```
-in your browser. This is the serialized response of the `balance/` endpoint defined in `DigitalWalletController.java`. You can see that all of the "getter" methods specified in the `DigitalWallet` class are serialized and returned as apart of the endpoints response.
+in your browser. This is the serialized response of the `balance/` endpoint defined in `DigitalWalletController.java`. You can see that all of the "getter" methods specified in the `DigitalWallet` class are serialized and returned as part of the endpoint's response.
 
 ### `transaction/`
 Now, say we want to make a transaction and add some Bitcoin to our digital wallet. To do this, enter `http://localhost:8080/transaction?value=1.22` into the browser. You will now see in the response that we added 1.22 Bitcoin to our digital wallet:
@@ -240,7 +240,7 @@ A quick helper endpoint was also added so you can easily reset your digital wall
 
 ### Error Handling
 Some light-weight error handling was also built in to the starter code if you look in the `processTransaction` method in `DigitalWallet` if you 
-try to exchance more Bitcoin than what you have in your digital wallet, it will throw a 400 error (Bad Request) describing that you have insufficient funds to complete the transaction. To test this, you should now have zero BTC in your digital wallet (if not call `http://localhost:8080/zero` to set the balance to zero), pass in a _negative_ amount as the value to the `transaction/` endpoint e.g `http://localhost:8080/transaction?value=-1.22`. You should see an error page display with a stack trace as well a specific error message describing that there were insufficient funds to complete the transaction.
+try to exchange more Bitcoin than what you have in your digital wallet, it will throw a 400 error (Bad Request) describing that you have insufficient funds to complete the transaction. To test this, you should now have zero BTC in your digital wallet (if not call `http://localhost:8080/zero` to set the balance to zero), pass in a _negative_ amount as the value to the `transaction/` endpoint e.g `http://localhost:8080/transaction?value=-1.22`. You should see an error page display with a stack trace as well a specific error message describing that there were insufficient funds to complete the transaction.
 
 ![Insufficient Funds Response](error-response.png)
 
@@ -287,7 +287,7 @@ and will have four methods for serialization:
 - public String getWhitePaper()
 - public double getSatoshis()
 
-After creating the `Bitcoin` class, the `DigitalWallet` class will still be a Singleton. Will have a reference to the `Bitcoin` singelton stored as an attribute, and will have three methods used to manage the Bitcoin Singleton:
+After creating the `Bitcoin` class, the `DigitalWallet` class will still be a Singleton. Will have a reference to the `Bitcoin` singleton stored as an attribute, and will have three methods used to manage the Bitcoin Singleton:
 - public Bitcoin processTransaction( double amount )
 - public Bitcoin zero()
 - public Bitcoin accountBalance()
