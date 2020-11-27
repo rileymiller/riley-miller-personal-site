@@ -116,13 +116,16 @@ public class DigitalWalletController {
 ```
 
 In this `DigitalWalletController` class, Spring uses the `@RestController` annotation above the class definition to signifiy that the class
-describes and endpoint that should be made available over the web.
+describes an endpoint that should be made available over the web.
 
 Inside the class there are three methods defined with a `@GetMapping(...)` annotation. This `@GetMapping(...)` annotation let's Spring know that whenever the [route](https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/) defined inside of the `@GetMapping(...)` is reached via HTTP - GET, the method defined for the route will be invoked to process the HTTP request.
 
 If you take a look at the `transaction/` endpoint, you will notice it's a little different than the other two. Inside the method signature you will see `@RequestParam(value = "value", defaultValue = "0" ) String value` defined. `@RequestParam` is another special annotation that is used to tell Spring that there is a [HTTP parameter](https://www.tutorialspoint.com/http/http_parameters.htm) that is expected to be passed to the endpoint. Inside the annotation there are two paremeters, the first is the key of the parameter that is being passed as part of the HTTP - GET request (called "value" in this endpoint), and the second parameter is the default value in case an explicit parameter is not set as part of the request. Then outside of the annotation you can see `String value` also defined as part of the method signature. Essentially what is happening here, Spring is parsing the HTTP - GET request and if a parameter specified as `value` is passed in, it will serialize the request and store the value in the locally scoped parameter `String value` which can be used inside the scope of the method. 
 
 For each of the endpoints defined inside of the `DigitalWalletController`, you can see that they all have a return type of a class named `DigitalWallet`. This return type is used to serialize a Java object into an HTTP response using a Java library called [Jackson2](https://github.com/FasterXML/jackson) that is configured automatically in Spring Boot. This process of serialization is essentially the conversion of a Java object to [JSON](https://www.w3schools.com/whatis/whatis_json.asp), or a format that clients (mobile/web) can recieve and process from our server.
+
+#### Serialization <a name="serialization"></a>
+If you aren't familiar with the process of [serialization](https://www.tutorialspoint.com/java/java_serialization.htm), it's basically an awesome way to convert an object in Java to a stream of bytes that you can write to a file. This process is typically used in API development to read requests from a client and convert them into Java objects that we can run on the JVM. Another common use case is if we need to persist some data during some type of execution flow in the service, you can serialize a Java object and write the stream to a database that you can index and recall and convert back into a Java object using serialization. (This is super cool btw 🤑) 
 
 Digging into this `DigitalWallet.java` class:
 ```java
@@ -270,31 +273,35 @@ Specifically, after you complete this refactor you should have the following dir
 		wallet/
 			DigitalWallet.java
 ```
+#### Instructions 🎒
+- Create a class called `Bitcoin`
+	- Make the `Bitcoin` class a singleton since this will only be used to manage _your_ Bitcoin.
+	- Add three attributes to the `Bitcoin` class:
+		- `name`
+		- `whitePaper`
+		- `btc`
+	- Create three methods that map to the three endpoints defined in `DigitalWalletController`:
+		- Bitcoin processTransation( double requestedBTC )
+		- Bitcoin setZero()
+		- Bitcoin accountBalance()
 
-The Bitcoin class you define should be a singleton, will have three instance attributes:
-- name
-- whitePaper
-- btc
+	- Create four methods that will be used to [serialize](#serialization) the Java object to a JSON response.
+		- public double getBTC()
+		- public String getName()
+		- public String getWhitePaper()
+		- public double getSatoshis()
 
-will have three methods for the three endpoints:
-- public Bitcoin processTransation( double requestedBTC )
-- public Bitcoin setZero()
-- public Bitcoin accountBalance()
+- Refactor the `DigitalWallet` class to:
+	- Contain a reference to the `Bitcoin` singleton
+	- Create three methods used to manage the Bitcoin Singleton:
+		- public Bitcoin processTransaction( double amount )
+		- public Bitcoin zero()
+		- public Bitcoin accountBalance()
+	- Remove all of the "getters" from this class
 
-and will have four methods for serialization:
-- public double getBTC()
-- public String getName()
-- public String getWhitePaper()
-- public double getSatoshis()
-
-After creating the `Bitcoin` class, the `DigitalWallet` class will still be a Singleton. Will have a reference to the `Bitcoin` singleton stored as an attribute, and will have three methods used to manage the Bitcoin Singleton:
-- public Bitcoin processTransaction( double amount )
-- public Bitcoin zero()
-- public Bitcoin accountBalance()
+- Refactor the `DigitalWalletController` endpoint methods to have a return type of `Bitcoin`
 
 **Note: you should no longer have any of the serialization getters on the `DigitalWallet` class**
-
-You will also need to update the return type of the endpoint methods in `DigitalWalletController` after refactoring these methods to serialize the `Bitcoin` class.
 
 _Before proceeding, make sure to test all three of the API endpoints to ensure that they all behave exactly the same as they did prior to extracting Bitcoin into its own class._
 
@@ -312,15 +319,17 @@ Transaction fees are a common feature of crypto digital exchanges, basically, th
 
 In order to implement this we will need to make serveral tweaks.
 
-First, we need to change the accesibility of the `Bitcoin` instance attributes as well as the `Bitcoin` constructor to protected. This will allow the derived `BitcoinRobust` class to inherit these attributes and constructor.
+#### Instructions 🎒
+- Change the accesibility of the `Bitcoin` instance attributes as well as the `Bitcoin` constructor to protected. This will allow the derived `BitcoinRobust` class to inherit these attributes and constructor.
 
-Next, we need to create our `BitcoinRobust` class. This class will be a `BitcoinRobust` singleton, will introduce two static attributes constants named:
-- BTC\_USD, which will hold the price of Bitcoin in USD (e.g BTC\_USD = 18656)
-- TRANSACTION\_FEE\_USD, which will hold the price of the transaction fee in USD (e.g TRANSACTION\_FEE\_USD = 11.66)
+- Create a class called `BitcoinRobust`
+	- Make this class a singleton.
+	- Create two static attributes constants named:
+		- `BTC_USD`, which will hold the price of Bitcoin in USD (e.g `BTC_USD` = 18656)
+		- `TRANSACTION_FEE_USD`, which will hold the price of the transaction fee in USD (e.g `TRANSACTION_FEE_USD` = 11.66)
+	- Implement the `processTransaction` method in the derived `BitcoinRobust` class. This method will now need to deduct a transaction fee off the amount of Bitcoin in the requested transaction. _Note: you should also take the transaction fee into account when checking to see whether or not there are sufficient funds for the transaction._
 
-The most significant change we will need to make in the `BitcoinRobust` class is in the implementation of `processTransaction`. This method will now need to deduct a transaction fee off the amount of Bitcoin in the requested transaction. Note: you should also take the transaction fee into account when checking to see whether or not there are sufficient funds for the transaction.
-
-After you finish creating the `BitcoinRobust` class, we will now change the singleton attribute in the `DigitalWallet` from a `Bitcoin` singleton, to a `BitcoinRobust` singleton. Notice, since we are correctly implementing the Liskov Substitution Principle, we are able to seamlessly swap in the `BitcoinRobust` class in the `DigitalWallet` class without having to refactor the `DigitalWallet` class.
+- Refactor the singleton attribute in the `DigitalWallet` from the `Bitcoin` singleton, to the `BitcoinRobust` singleton. Notice, since we are correctly implementing the Liskov Substitution Principle, we are able to seamlessly swap in the `BitcoinRobust` class in the `DigitalWallet` class without having to refactor the `DigitalWallet` class.
 
 Now to test, try entering requests for all of the endpoints into the browser.
 
