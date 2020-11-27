@@ -105,10 +105,13 @@ export const IntroSection = () => (
     </UnorderedList>
     <h2>Java Articles</h2>
     <li>
-      <a href="/java-solid-principles-spring-boot-pt1">SOLID Principles in Spring Boot Setup</a>
+      <a href="/java-solid-principles-spring-boot-pt1">SOLID Principles in Spring Boot: Setup</a>
     </li>
     <li>
-      <a href="/java-solid-principles-spring-boot-pt2">SOLID Principles in Spring Boot Assignment Pt. 1</a>
+      <a href="/java-solid-principles-spring-boot-pt2">SOLID Principles in Spring Boot: Assignment Pt. 1</a>
+    </li>
+    <li>
+      <a href="java-solid-principles-spring-boot-pt3" >SOLID Principles in Spring Boot: Assignment Pt. 2</a>
     </li>
   </section>
 )
