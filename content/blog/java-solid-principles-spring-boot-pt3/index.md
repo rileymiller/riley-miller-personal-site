@@ -240,4 +240,7 @@ After you refactor this, ensure that the endpoint still behaves correctly and re
 
 Congrats, you've now applied the ISP in practice.
 
-## Submission/Rubric
+## Submission
+Submit your assignment on Canvas with your whole directory as a zip file `<lastName-section>-spring-pt1.zip` e.g `Smith-SectionC-spring-pt1.zip`
+
+## Rubric

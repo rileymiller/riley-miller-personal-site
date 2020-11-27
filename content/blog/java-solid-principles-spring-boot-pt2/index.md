@@ -183,14 +183,14 @@ public class DigitalWallet {
 	/////////////////////////////////////////
 	//	For Serialization
 	////////////////////////////////////////
-	public double getBTC() 
-	{
-		return fBTC;
-	}
-	
 	public String getName()
 	{
 		return fName;
+	}
+
+	public double getBTC() 
+	{
+		return fBTC;
 	}
 	
 	public String getWhitePaper()
@@ -353,4 +353,7 @@ Notice that the `transactionFeeUSD` field now appears on the response and that t
 
 Once you've verified all of the endpoints after implementing the **Liskov Substitution Principle** this assignment is complete.
 
-## Submission/Rubric
+## Submission
+Submit your assignment on Canvas with your whole directory as a zip file `<lastName-section>-spring-pt1.zip` e.g `Smith-SectionC-spring-pt1.zip`
+
+## Rubric
