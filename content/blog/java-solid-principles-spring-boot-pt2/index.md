@@ -1,5 +1,5 @@
 ---
-title: "SOLID Principles in Spring Boot: Single Responsibility Principle & Liskov Substitution Principle"
+title: "SOLID Principles in Spring Boot Part I"
 date: "2020-11-23"
 description: Object-oriented SOLID principles in the context of Spring Boot Assignment Pt. 1
 featuredImage: "../../assets/spring-boot/spring-boot-2-mtns.jpg"
@@ -33,9 +33,15 @@ In this assignment we will deal with the **Single-responsibility principle** as 
 Before we start, make sure that you've completed the [setup](../java-solid-principles-spring-boot-pt1) for this assignment.
 
 To clone the starter code run:
+(If you have SSH configured on GitHub)
 ```shell
 git clone git@github.com:rileymiller/csci306-solidspring-starter-code.git
 ```
+(If you do not have SSH configured on GitHub)
+```shell
+https://github.com/rileymiller/csci306-solidspring-starter-code.git
+```
+
 ## Starter Code
 
 The basic functionality that we are implementing in our digital wallet API is the ability to:
@@ -276,9 +282,10 @@ Specifically, after you complete this refactor you should have the following dir
 #### Instructions 🎒
 - Create a class called `Bitcoin`
 	- Make the `Bitcoin` class a singleton since this will only be used to manage _your_ Bitcoin.
-	- Add three attributes to the `Bitcoin` class:
-		- `name`
-		- `whitePaper`
+	- Add two static constants to the `Bitcoin` class:
+		- `NAME`
+		- `WHITE_PAPER`
+	- Add one non-static attribute to the `Bitcoin` class:
 		- `btc`
 	- Create three methods that map to the three endpoints defined in `DigitalWalletController`:
 		- Bitcoin processTransation( double requestedBTC )
@@ -286,8 +293,8 @@ Specifically, after you complete this refactor you should have the following dir
 		- Bitcoin accountBalance()
 
 	- Create four methods that will be used to [serialize](#serialization) the Java object to a JSON response.
-		- public double getBTC()
 		- public String getName()
+		- public double getBTC()
 		- public String getWhitePaper()
 		- public double getSatoshis()
 
@@ -328,6 +335,8 @@ In order to implement this we will need to make serveral tweaks.
 		- `BTC_USD`, which will hold the price of Bitcoin in USD (e.g `BTC_USD` = 18656)
 		- `TRANSACTION_FEE_USD`, which will hold the price of the transaction fee in USD (e.g `TRANSACTION_FEE_USD` = 11.66)
 	- Implement the `processTransaction` method in the derived `BitcoinRobust` class. This method will now need to deduct a transaction fee off the amount of Bitcoin in the requested transaction. _Note: you should also take the transaction fee into account when checking to see whether or not there are sufficient funds for the transaction._
+	- Create one method that will be used to [serialize](#serialization) the Java object to a JSON response.
+		- public double getTransactionFeeUSD()
 
 - Refactor the singleton attribute in the `DigitalWallet` from the `Bitcoin` singleton, to the `BitcoinRobust` singleton. Notice, since we are correctly implementing the Liskov Substitution Principle, we are able to seamlessly swap in the `BitcoinRobust` class in the `DigitalWallet` class without having to refactor the `DigitalWallet` class.
 
@@ -343,3 +352,5 @@ e.g. Entering `http://localhost:8080/transaction?value=1.22` in the browser shou
 Notice that the `transactionFeeUSD` field now appears on the response and that the amount of BTC is slightly less than the `1.22` sent in the transaction request.
 
 Once you've verified all of the endpoints after implementing the **Liskov Substitution Principle** this assignment is complete.
+
+## Submission/Rubric
