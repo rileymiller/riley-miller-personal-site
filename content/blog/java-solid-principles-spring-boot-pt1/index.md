@@ -40,22 +40,26 @@ So far in the course you've used Java to build applications that can be run on y
 
 To get setup, go ahead and clone the starter code with:
 ```shell
-git clone git@github.com:rileymiller/csci306-solidspring-starter-code.git
+git clone git@github.com:rileymiller/solid-spring-canvas.git
+
+# or
+
+git clone https://github.com/rileymiller/solid-spring-canvas.git
 ```
 
-then change into the directory
+or you can download the starter code from Canvas.
+
+After you've completed that, change into the directory
 
 ```shell
-cd csci306-solidspring-starter-code/
+cd solid-spring-canvas/
 ```
 <br />
-After cloning the starter code go ahead and open up the project in your Eclipse workspace. 
-
-To import the [Maven](https://maven.apache.org/) project into Eclipse, select `File > Import > Maven > Existing Maven Projects`.
+After downloading the starter code go ahead and open up the project in your Eclipse workspace importing it as a [Maven](https://maven.apache.org/) project into Eclipse. To do this select `File > Import > Maven > Existing Maven Projects`.
 
 ![Import Maven Project](../../assets/spring-boot/import-maven.png)
 
-Then find the `csci306-solidspring-starter-code` directory using the `Browse...` option and set it as the `Root Directory`.
+Then find the `solid-spring-canvas` directory using the `Browse...` option and set it as the `Root Directory`.
 
 ![Import Maven Project 2](../../assets/spring-boot/import-maven-2.png)
 
@@ -66,13 +70,13 @@ My issue was with the `JRE System Library`, I had to click on `JRE System Librar
 
 ![JRE System Library](../../assets/spring-boot/jre-system-lib.png)
 
-Then I changed the `Execution environment` from JavaSE-11 (unbound) to JavaSE-1.8 (AdoptOpenJDK [1.8.0_222])
+Then I changed the `Execution environment` to JavaSE-1.8.
 
 ![Java System Library](../../assets/spring-boot/java-sys-lib.png)
 
 After clicking `Apply and Close`, all of the dependency issues should be resolved. If they're not, please reach out on Piazza or seek help during office hours to get setup.
 
-Now that the build errors are resolved, go ahead and click the `Run` button and your Spring Boot server will start. The server will be run locally and will server from port 8080 by default.
+Now that the build errors are resolved, go ahead and click the `Run` button and your Spring Boot server will start. The server will be run locally and will server from port 8080 by default. Depending on your local Eclipse setup, you may have multiple options for how to run the project. We want to run `SolidSpringApplication` as a `Java Application`.
 
 After you've started your server, open up your favorite browser and enter `http://localhost:8080/` into the url.
 
@@ -84,7 +88,7 @@ This route is defined and handled by the `HelloController` class.
 
 ```java
 // HelloController.java
-package com.csci306.solidspring;
+package solidSpring;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -105,5 +109,7 @@ public class HelloController {
 The `@RestController` annotation is used to tell Spring that the class describes an [endpoint](https://smartbear.com/learn/performance-monitoring/api-endpoints/) that should be made available over the web.
 
 The `@RequestMapping` annotation over the `index()` method is used to tell Spring that any HTTP request sent to the `/` route of the application should execute this method.
+
+To stop the server, hit the red stop button in the Eclipse environment.
 
 That's it for the article, you're now ready to take on the SOLID Spring Boot assignments.
