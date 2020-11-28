@@ -57,8 +57,10 @@ export const IntroSection = () => (
     </p>
 
     <p>
-      I work with a lot of different technologies during the course of my week and have worked with many others in the past. I'm currently interested in TypeScript, React,
-      React Native, Jenkins, Docker, C++, Bash, JavaScript Testing (Jest, Cypress, Selenium, @testing-library), TensorFlow, Node.js, Python, and Arch Linux.
+      I work with a lot of different technologies during the course of my week and have worked with many others in the past. I'm currently interested in Java, Spring, Serverless Architecture,
+      AWS, Microservices, Ansible, Docker, Jenkins, Production Telemetry, Splunk, TypeScript, React, and Raspberry Pis.
+
+      In the past I've worked pretty heavily with React Native, Bash, Frontend Testing (Jest, Cypress, Selenium, @testing-library), TensorFlow, C++, Node.js, Python, and Arch Linux.
     </p>
 
 
@@ -73,7 +75,7 @@ export const IntroSection = () => (
     </p>
 
     <p>
-      I'm just finished teaching an online section of Data Structures at Colorado School of Mines and wrote some
+      I've just finished teaching an online section of Data Structures at Colorado School of Mines and wrote some
       articles to provide supplementary materials to my students if you're interested in learning any C++. 👇
     </p>
     <h2>C++ Articles</h2>
@@ -103,6 +105,12 @@ export const IntroSection = () => (
         <a href="/c++-pointers">C++ Pointers</a>
       </li>
     </UnorderedList>
+
+    <p>
+      I'm currently teaching a section of Software Engineering at Mines this fall as an Adjunct Professor and have recently created
+      some content for teaching SOLID principles. In the SOLID principles assignments below 👇, students create a lightweight API in Spring
+      Boot to manage their imaginary digital wallets 💸.
+    </p>
     <h2>Java Articles</h2>
     <li>
       <a href="/java-solid-principles-spring-boot-pt1">SOLID Principles in Spring Boot: Setup</a>
