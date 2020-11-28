@@ -1,7 +1,7 @@
 ---
 title: "SOLID Principles in Spring Boot Part II"
 date: "2020-11-26"
-description: Object-oriented SOLID principles in the context of Spring Boot Assignment Pt. 2
+description: Object-oriented SOLID principles in the context of Spring Boot Assignment Pt. II
 featuredImage: "../../assets/spring-boot/spring-boot-3-mtns.jpg"
 featuredImageDescription: "Photo from Unsplash by"
 photographerLink: "https://unsplash.com/@danieljschwarz"
