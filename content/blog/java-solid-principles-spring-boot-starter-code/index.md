@@ -120,9 +120,9 @@ public class DigitalWallet {
 	
 	private static DigitalWallet wallet = new DigitalWallet();
 	
-	private static final String fName = "Bitcoin";
-	private static final String fWhitePaper = "https://bitcoin.org/bitcoin.pdf";
-	private double fBTC = 0;
+	private static final String NAME = "Bitcoin";
+	private static final String WHITE_PAPER = "https://bitcoin.org/bitcoin.pdf";
+	private double BTC = 0;
 	
 	private DigitalWallet() { };
 	
@@ -134,14 +134,14 @@ public class DigitalWallet {
 	
 	public DigitalWallet processTransaction( double amount ) throws Exception
 	{
-		if( fBTC + amount < 0 )
+		if( BTC + amount < 0 )
 		{
 			throw new Exception(
 				String.format("\nInsufficient funds:\n\t BTC" +
 				" Available: %1$s\n\t BTC Requested: %2$s",
-				 fBTC, amount));
+				 BTC, amount));
 		} else {
-			fBTC = fBTC + amount;
+			BTC = BTC + amount;
 		}
 		
 		return this;
@@ -149,7 +149,7 @@ public class DigitalWallet {
 	
 	public DigitalWallet zero()
 	{
-		fBTC = 0;
+		BTC = 0;
 		
 		return this;
 	}
@@ -164,28 +164,28 @@ public class DigitalWallet {
 	////////////////////////////////////////
 	public String getName()
 	{
-		return fName;
+		return NAME;
 	}
 
 	public double getBTC() 
 	{
-		return fBTC;
+		return BTC;
 	}
 	
 	public String getWhitePaper()
 	{
-		return fWhitePaper;
+		return WHITE_PAPER;
 	}
 	
 	public double getSatoshis()
 	{
-		return fBTC * 100000000;
+		return BTC * 100000000;
 	}
 
 }
 ```
 
-You can see that the class is making use of the [Singleton pattern](https://www.tutorialspoint.com/design_pattern/singleton_pattern.htm). `DigitalWallet` also has three instance attributes outside of the Singleton instance: `fName`, `fWhitePaper`, and `fBTC`. These attributes hold the name of Bitcoin, the link to the Bitcoin whitepaper, and the amount of Bitcoin in our digital wallet.
+You can see that the class is making use of the [Singleton pattern](https://www.tutorialspoint.com/design_pattern/singleton_pattern.htm). `DigitalWallet` also has three instance attributes outside of the Singleton instance: `NAME`, `WHITE_PAPER`, and `BTC`. These attributes hold the name of Bitcoin, the link to the Bitcoin whitepaper, and the amount of Bitcoin in our digital wallet.
 
 Inspecting the rest of the class, we can see the three methods that are invoked in `DigitalWalletController`: `processTransaction`, `zero`, and `accountBalance`. These classes handle transactions of Bitcoin in the digital wallet, set the amount of Bitcoin in our digital wallet to zero, and retrieve the balance of Bitcoin in the digital wallet respectively.
 
