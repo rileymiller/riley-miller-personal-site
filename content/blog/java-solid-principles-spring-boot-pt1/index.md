@@ -78,7 +78,7 @@ After clicking `Apply and Close`, all of the dependency issues should be resolve
 
 Now that the build errors are resolved, go ahead and click the `Run` button and your Spring Boot server will start. The server will be run locally and will server from port 8080 by default. Depending on your local Eclipse setup, you may have multiple options for how to run the project. We want to run `SolidSpringApplication` as a `Java Application`.
 
-After you've started your server, open up your favorite browser and enter `http://localhost:8080/` into the url.
+After you've started your server, open up your favorite browser and enter `http://localhost:8080/` into the url. **Note: Make sure that your URL prefix is `http://` not `https://` since the Tomcat server is not configured to work with HTTPS protocol out of the box.** If you're interested in how to enable Tomcat to work with SSL/TLS, checkout the [Tomcat documentation](https://tomcat.apache.org/tomcat-7.0-doc/ssl-howto.html).
 
 ![Greetings from Spring Boot! Response](../../assets/spring-boot/hello-spring.png)
 
