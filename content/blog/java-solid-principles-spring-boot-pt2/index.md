@@ -36,7 +36,7 @@ Before we start, make sure that you've completed the [setup](../java-solid-princ
 
 In part one of the assignment, we will be working through some exercises to demonstrate the **Single Responsibility Principle** and the **Liskov Substitution Principle**.
 
-If you need some help understanding the starter code or if you're new to Spring, you can reference this short [article](../java-solid-principles-starter-code) that breaks down the starter code in depth.
+If you need some help understanding the starter code or if you're new to Spring, you can reference this short [article](../java-solid-principles-spring-boot-starter-code) that breaks down the starter code in depth.
 
 ### Single Responsibility Principle
 One of the common urges for developers working in Object-oriented languages is to write tightly coupled logic in the form of monolithic classes that try to address all of the present specifications for the system. You can see this in the implementation given in the starter code where we have two classes `DigitalWalletController` and `DigitalWallet` that handle all of the functionality for the API. There are many things wrong with this implementation but the first thing we'll focus on is the **Single Responsibility Principle**.
