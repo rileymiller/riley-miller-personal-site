@@ -112,4 +112,5 @@ The `@RequestMapping` annotation over the `index()` method is used to tell Sprin
 
 To stop the server, hit the red stop button in the Eclipse environment.
 
-That's it for the article, you're now ready to take on the SOLID Spring Boot assignments.
+#### Starter Code
+For a walkthrough of the actual starter code, reference this [article](../java-solid-principles-spring-boot-starter-code) which steps through some of the nuances of Spring and gives more context on the starter code for the assignments.

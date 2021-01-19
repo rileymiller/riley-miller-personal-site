@@ -74,11 +74,35 @@ export const IntroSection = () => (
       If I write something you like please share and if you have any feedback please feel free to reach me with any of the channels above.
     </p>
 
+    <h2>Front-end Articles</h2>
+    <li>
+      <a href="/gatsby/deploy-gatsby-s3-cloudfront-gh-actions/#git-repo-on-github">Deploy a Gatsby site to S3 with GitHub Actions</a>
+    </li>
+    <hr />
+    <h2>Professing 👨‍🏫</h2>
     <p>
-      I've just finished teaching an online section of Data Structures at Colorado School of Mines and wrote some
+      I just finished teaching a section of Software Engineering at Mines this fall as an Adjunct Professor and have recently created
+      some content for teaching SOLID principles. In the SOLID principles assignments below 👇, students create a lightweight API in Spring
+      Boot to manage their imaginary digital wallets 💸.
+    </p>
+    <h3>Java Articles</h3>
+    <li>
+      <a href="/java-solid-principles-spring-boot-pt1">SOLID Principles in Spring Boot: Setup</a>
+    </li>
+    <li>
+      <a href="/java-solid-principles-spring-boot-starter-code">SOLID Principles in Spring Boot: Starter Code Reference</a>
+    </li>
+    <li>
+      <a href="/java-solid-principles-spring-boot-pt2">SOLID Principles in Spring Boot: Assignment Pt. 1</a>
+    </li>
+    <li>
+      <a href="/java-solid-principles-spring-boot-pt3" >SOLID Principles in Spring Boot: Assignment Pt. 2</a>
+    </li>
+    <p>
+      Last summer I taught a section of Data Structures at Colorado School of Mines as an Adjunct Professor and wrote some
       articles to provide supplementary materials to my students if you're interested in learning any C++. 👇
     </p>
-    <h2>C++ Articles</h2>
+    <h3>C++ Articles</h3>
     <UnorderedList>
       <li>
         <a href="/c++-objects-classes">Objects and Classes in C++</a>
@@ -105,25 +129,6 @@ export const IntroSection = () => (
         <a href="/c++-pointers">C++ Pointers</a>
       </li>
     </UnorderedList>
-
-    <p>
-      I'm currently teaching a section of Software Engineering at Mines this fall as an Adjunct Professor and have recently created
-      some content for teaching SOLID principles. In the SOLID principles assignments below 👇, students create a lightweight API in Spring
-      Boot to manage their imaginary digital wallets 💸.
-    </p>
-    <h2>Java Articles</h2>
-    <li>
-      <a href="/java-solid-principles-spring-boot-pt1">SOLID Principles in Spring Boot: Setup</a>
-    </li>
-    <li>
-      <a href="/java-solid-principles-spring-boot-starter-code">SOLID Principles in Spring Boot: Starter Code Reference</a>
-    </li>
-    <li>
-      <a href="/java-solid-principles-spring-boot-pt2">SOLID Principles in Spring Boot: Assignment Pt. 1</a>
-    </li>
-    <li>
-      <a href="java-solid-principles-spring-boot-pt3" >SOLID Principles in Spring Boot: Assignment Pt. 2</a>
-    </li>
   </section>
 )
 
