@@ -19,7 +19,7 @@ export const UnorderedList = styled.ul({
 export const IntroSection = () => (
   <section>
     <p>
-      Hi Friends
+      Hi Friends,
         </p>
 
     <p>
@@ -73,8 +73,8 @@ export const IntroSection = () => (
     <p>
       If I write something you like please share and if you have any feedback please feel free to reach me with any of the channels above.
     </p>
-
-    <h2>Front-end Articles</h2>
+    <hr />
+    <h2>Front-end Articles 💅</h2>
     <li>
       <a href="/gatsby/deploy-gatsby-s3-cloudfront-gh-actions/#git-repo-on-github">Deploy a Gatsby site to S3 with GitHub Actions</a>
     </li>

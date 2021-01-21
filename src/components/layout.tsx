@@ -3,7 +3,8 @@ import styled from "@emotion/styled"
 import { Link } from "gatsby"
 import { GLOBAL_COLORS } from "../utils/colors"
 import { rhythm, scale } from "../utils/typography"
-import { css } from "@emotion/core"
+import { css, Global } from "@emotion/core"
+import { global } from "../styles/globals"
 
 type Props = {
   location?: Location | string
@@ -93,30 +94,35 @@ const Layout = ({ location, title, children }: Props) => {
     </SecondaryTitle>
   )
 
-
   return (
-    <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-        maxWidth: rhythm(28),
-        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-      }}
-    >
-      <header>{(location.pathname === rootPath) ? <RootHeader /> : <SecondaryHeader />}</header>
-      <main
-        css={css`
+    <>
+      <Global
+        styles={global}
+      />
+
+      <div
+        style={{
+          marginLeft: `auto`,
+          marginRight: `auto`,
+          maxWidth: rhythm(28),
+          padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
+        }}
+      >
+        <header>{(location.pathname === rootPath) ? <RootHeader /> : <SecondaryHeader />}</header>
+        <main
+          css={css`
         ul li {
           list-style-position: outside;
           margin-left: 1em;
         }
         `}
-      >{children}</main>
-      <footer>
-        © {new Date().getFullYear()}, Authored with ❤️ by Riley
+        >{children}</main>
+        <footer>
+          © {new Date().getFullYear()}, Authored with ❤️ by Riley
         {` `}
-      </footer>
-    </div >
+        </footer>
+      </div >
+    </>
   )
 }
 

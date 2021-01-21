@@ -24,7 +24,7 @@ Create a repo using the GitHub UI.
 
 Then, create a local git repo and connect it to the remote git repo.
 
-```
+```bash
 git remote add origin <remote_git_repo_url>
 ```
 
@@ -33,12 +33,12 @@ If you don't already have your development environment setup, here is a link to 
 
 Most importantly, you need to have Node and the Gatsby CLI installed.
 
-```shell
+```bash
 npm install -g gatsby-cli
 ```
 
 Then, create a new Gatsby project from a starter:
-```shell
+```bash
 gatsby new hello-world https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
@@ -73,7 +73,7 @@ Scroll down to the end of the page to the "Static website hosting" section and c
  We now have one final step to ensure that people can fetch our website assets from our S3 bucket.
 
  Under the S3 bucket, navigate to the "Permissions" tab. Then scroll down to the "Bucket policy" text area and paste in the following policy for the S3 bucket:
- ```json
+ ```json {5-12}
  {
     "Version": "2012-10-17",
     "Statement": [
@@ -156,7 +156,7 @@ Scroll down to the bottom of the page and select the "Manual Workflow" option.
 This will create a pre-populated GitHub workflow.
 
 Now you will paste in the following workflow into the GitHub editor:
-```
+```yaml
 name: Deploy
 
 on:
@@ -191,7 +191,7 @@ jobs:
 
 This workflow has several steps in it that we'll walk through.
 
-```
+```yaml {1,6}
 name: Deploy
 
 on:
@@ -205,7 +205,7 @@ The first part of the workflow will specify the name of the workflow, `Deploy`.
 Then the second rule, we specify that the workflow should only be run when there is a push to the master branch. This allows us
 to automate the deployment of our site anytime there is a commit. This is super useful and allows us to improve our development velocity.
 
-```
+```yaml {1-3}
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -240,7 +240,7 @@ Directly underneath the `deploy` job we specify the environment that the job sho
 
 Next, we will define the job "steps" and string together our series of composable GitHub actions to publish our site to our S3 bucket.
 
-```
+```yaml
       - name: Checkout
         uses: actions/checkout@v2
 ```
@@ -250,7 +250,7 @@ You can see that the syntax of defining a GitHub workflow job specifies a `name`
 This first step in the job will checkout the main branch of the GitHub repo into the container environment.
 
 
-```
+```yaml
       - name: Use Node.js 14
         uses: actions/setup-node@v1
         with:
@@ -259,7 +259,7 @@ This first step in the job will checkout the main branch of the GitHub repo into
 
 The next step in the job will setup Node in the job environment. This will allow us to build our site using the JavaScript runtime. We use the `actions/setup-node@v1` action and specify that we want to use version 14 of Node.
 
-```
+```yaml
       - name: Build
         run: |
           yarn install && yarn build
@@ -267,7 +267,7 @@ The next step in the job will setup Node in the job environment. This will allow
 
 Next we will install all of the project's dependencies and build the Gatsby project so that it's ready to deploy to our S3 bucket.
 
-```
+```yaml {2,4-6  }
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -280,7 +280,7 @@ Next up, we configure the AWS credentials that we will use to connect to the S3 
 
 _Note: You also need to set the `aws-region` parameter of the `aws-actions/configure-aws-credentials@v1` action. This parameter should be the availability zone that you created your S3 bucket in._
 
-```
+```yaml {2,4}
       - name: Deploy
         uses: jonelantha/gatsby-s3-action@v1
         with:

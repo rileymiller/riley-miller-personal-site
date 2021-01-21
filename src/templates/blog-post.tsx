@@ -1,15 +1,20 @@
 import React from 'react'
 import { Link, graphql } from 'gatsby'
 import Img from 'gatsby-image'
+import { MDXProvider, Components } from '@mdx-js/react'
 
 import { Bio } from '../components/bio'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import { CodeBlock } from '../components/codeBlock'
+// import CodeBlock from '../components/codeBlock'
+import { MDXRenderer } from "gatsby-plugin-mdx"
+
 import { rhythm, scale } from '../utils/typography'
 
 interface Props {
   data: {
-    markdownRemark: any
+    mdx: any
     site: {
       siteMetadata: {
         title: string
@@ -17,10 +22,18 @@ interface Props {
     }
   }
   pageContext: any
+  children: React.ReactNode
 }
 
-const BlogPostTemplate = ({ data, pageContext }: Props) => {
-  const post = data.markdownRemark
+const preComponent = (props: any) => <div {...props} />
+
+const components: Components = {
+  pre: preComponent,
+  code: CodeBlock
+}
+
+const BlogPostTemplate = ({ data, pageContext, children }: Props) => {
+  const post = data.mdx
   const siteTitle = data.site.siteMetadata.title
   const featuredImgFluid = post.frontmatter?.featuredImage?.childImageSharp?.fluid
   const featuredImageDescription = post.frontmatter?.featuredImageDescription
@@ -29,86 +42,93 @@ const BlogPostTemplate = ({ data, pageContext }: Props) => {
 
   const { previous, next } = pageContext
   return (
-    <Layout location={typeof window !== `undefined` ? window.location : ''} title={siteTitle}>
-      <SEO
-        title={post.frontmatter.title}
-        description={post.frontmatter.description || post.excerpt}
-      />
-      <h1
-        style={{
-          marginTop: rhythm(1),
-          marginBottom: rhythm(.1),
-        }}
-      >
-        {post.frontmatter.title}
-      </h1>
-      <p
-        style={{
-          ...scale(-1 / 5),
-          display: `block`,
-          marginBottom: rhythm(.1)
-        }}
-      >
-        {post.frontmatter.date}
-      </p>
-      {post.frontmatter?.featuredImage && <Img
-        style={{
-          marginTop: rhythm(.2),
-          marginBottom: rhythm(.3)
-        }}
-        fluid={featuredImgFluid}
-      />}
-      {featuredImageDescription &&
-        <p style={{
-          marginBottom: rhythm(1),
-          display: `flex`,
-          fontStyle: `italic`,
-          justifyContent: `center`
-        }}>
-          {featuredImageDescription
-
-          }
-          <a
-            style={{
-              marginLeft: rhythm(.2)
-            }}
-            href={photographerLink}>{photographerName}</a>
-        </p>
+    <MDXProvider
+      components={
+        components
       }
+    >
 
-      <div dangerouslySetInnerHTML={{ __html: post.html }} />
-      <hr
-        style={{
-          marginBottom: rhythm(1),
-        }}
-      />
-      <Bio />
+      <Layout location={typeof window !== `undefined` ? window.location : ''} title={siteTitle}>
+        <SEO
+          title={post.frontmatter.title}
+          description={post.frontmatter.description || post.excerpt}
+        />
+        <h1
+          style={{
+            marginTop: rhythm(1),
+            marginBottom: rhythm(.1),
+          }}
+        >
+          {post.frontmatter.title}
+        </h1>
+        <p
+          style={{
+            ...scale(-1 / 5),
+            display: `block`,
+            marginBottom: rhythm(.1)
+          }}
+        >
+          {post.frontmatter.date}
+        </p>
+        {post.frontmatter?.featuredImage && <Img
+          style={{
+            marginTop: rhythm(.2),
+            marginBottom: rhythm(.3)
+          }}
+          fluid={featuredImgFluid}
+        />}
+        {featuredImageDescription &&
+          <p style={{
+            marginBottom: rhythm(1),
+            display: `flex`,
+            fontStyle: `italic`,
+            justifyContent: `center`
+          }}>
+            {featuredImageDescription
 
-      <ul
-        style={{
-          display: `flex`,
-          flexWrap: `wrap`,
-          justifyContent: `space-between`,
-          listStyle: `none`,
-          padding: 0,
-        }}
-      >
-        <li>
-          {previous && (
-            <Link to={previous.fields.slug} rel="prev">
-              ← {previous.frontmatter.title}
-            </Link>
-          )}
-        </li>
-        <li>
-          {next && (
-            <Link to={next.fields.slug} rel="next">
-              {next.frontmatter.title} →
-            </Link>
-          )}
-        </li>
-      </ul>
-    </Layout>
+            }
+            <a
+              style={{
+                marginLeft: rhythm(.2)
+              }}
+              href={photographerLink}>{photographerName}</a>
+          </p>
+        }
+        <MDXRenderer>{post.body}</MDXRenderer>
+        {/* <div dangerouslySetInnerHTML={{ __html: post.html }} /> */}
+        <hr
+          style={{
+            marginBottom: rhythm(1),
+          }}
+        />
+        <Bio />
+
+        <ul
+          style={{
+            display: `flex`,
+            flexWrap: `wrap`,
+            justifyContent: `space-between`,
+            listStyle: `none`,
+            padding: 0,
+          }}
+        >
+          <li>
+            {previous && (
+              <Link to={previous.fields.slug} rel="prev">
+                ← {previous.frontmatter.title}
+              </Link>
+            )}
+          </li>
+          <li>
+            {next && (
+              <Link to={next.fields.slug} rel="next">
+                {next.frontmatter.title} →
+              </Link>
+            )}
+          </li>
+        </ul>
+      </Layout>
+    // </MDXProvider>
   )
 }
 
@@ -122,10 +142,10 @@ export const pageQuery = graphql`
         author
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    mdx(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
-      html
+      body
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")

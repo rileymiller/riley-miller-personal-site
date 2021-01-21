@@ -173,7 +173,7 @@ To demonstrate the ISP, let's implement Ethereum Smart Contracts in our service.
 	- Create a new attribute that is a list of `SmartContract`s called `smartContracts`
 	- Implement the new `addContract( String contract )` method, creating a `SmartContract` object, then adding this object to the `smartContracts` list.
 	- Create a getter for the `smartContracts` attribute:
-		- public List<SmartContract> getSmartContracts()
+		- `public List<SmartContract> getSmartContracts()`
 
 - In the `DigitalWallet` class:
 	- Create a new method `addContract( ICoin coin, String contract )` that calls the `coin` `addContract` method.
