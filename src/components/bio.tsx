@@ -30,7 +30,7 @@ export const IntroSection = () => (
       I am a Founder, Engineer, Professor, Researcher, former college football player, and English Bulldog Dad. </p>
 
     <p>
-      I'm currently working full-time as a Software Engineer for Workday and starting LiveLot 😈.
+      I'm currently a Software Engineer for Workday by day and starting LiveLot at night.
     </p>
 
     <p>
@@ -57,8 +57,11 @@ export const IntroSection = () => (
 
     <p>
       I work with a lot of different technologies during the course of my week and have worked with many others in the past. I'm currently interested in building cool shit.
+    </p>
 
+    <p>
       In the past I've worked pretty heavily with Java, React, Docker, Jenkins, React Native, Bash, Frontend Testing (Jest, Cypress, Selenium, @testing-library), TensorFlow, C++, Node.js, Python, and Arch Linux.
+      Whatever the tool is to get schwifty.
     </p>
 
 
