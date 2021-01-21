@@ -27,11 +27,10 @@ export const IntroSection = () => (
         </p>
 
     <p>
-      I am a skilled Software Engineer, Professor, Researcher, Co-founder, former college football player, and English Bulldog Dad. </p>
+      I am a Founder, Engineer, Professor, Researcher, former college football player, and English Bulldog Dad. </p>
 
     <p>
-      I'm currently working full-time as a Software Engineer for Workday, teaching as an adjunct faculty member for Colorado School of Mines, and kickstarting my own company LiveLot—a real-time
-      parking management platform.
+      I'm currently working full-time as a Software Engineer for Workday and starting LiveLot 😈.
     </p>
 
     <p>
@@ -57,10 +56,9 @@ export const IntroSection = () => (
     </p>
 
     <p>
-      I work with a lot of different technologies during the course of my week and have worked with many others in the past. I'm currently interested in Java, Spring, Serverless Architecture,
-      AWS, Microservices, Ansible, Docker, Jenkins, Production Telemetry, Splunk, TypeScript, React, and Raspberry Pis.
+      I work with a lot of different technologies during the course of my week and have worked with many others in the past. I'm currently interested in building cool shit.
 
-      In the past I've worked pretty heavily with React Native, Bash, Frontend Testing (Jest, Cypress, Selenium, @testing-library), TensorFlow, C++, Node.js, Python, and Arch Linux.
+      In the past I've worked pretty heavily with Java, React, Docker, Jenkins, React Native, Bash, Frontend Testing (Jest, Cypress, Selenium, @testing-library), TensorFlow, C++, Node.js, Python, and Arch Linux.
     </p>
 
 
@@ -76,7 +74,7 @@ export const IntroSection = () => (
     <hr />
     <h2>Front-end Articles 💅</h2>
     <li>
-      <a href="/gatsby/deploy-gatsby-s3-cloudfront-gh-actions/#git-repo-on-github">Deploy a Gatsby site to S3 with GitHub Actions</a>
+      <a href="/gatsby/deploy-gatsby-s3-gh-actions/#git-repo-on-github">Deploy a Gatsby site to S3 with GitHub Actions</a>
     </li>
     <hr />
     <h2>Professing 👨‍🏫</h2>
