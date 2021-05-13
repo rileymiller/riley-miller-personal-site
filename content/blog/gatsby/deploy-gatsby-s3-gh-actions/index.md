@@ -6,6 +6,8 @@ featuredImage: "./marvin-meyer-unsplash.jpg"
 featuredImageDescription: "Photo from Unsplash by"
 photographerLink: "https://unsplash.com/@marvelous"
 photographerName: "Marvin Meyer"
+imageAlt: "Gatsby Image"
+imageTitleHtml: '<span>Photo at <a href="https://unsplash.com/photos/VvKdB1FYNZs" /></span>'
 ---
 
 

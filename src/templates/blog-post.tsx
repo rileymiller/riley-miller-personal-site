@@ -5,7 +5,7 @@ import { MDXProvider, Components } from '@mdx-js/react'
 
 import { Bio } from '../components/bio'
 import Layout from '../components/layout'
-import SEO from '../components/seo'
+import SEO, { constructUrl } from '../components/seo'
 import { CodeBlock } from '../components/codeBlock'
 // import CodeBlock from '../components/codeBlock'
 import { MDXRenderer } from "gatsby-plugin-mdx"
@@ -18,6 +18,7 @@ interface Props {
     site: {
       siteMetadata: {
         title: string
+        siteUrl: string
       }
     }
   }
@@ -36,6 +37,7 @@ const BlogPostTemplate = ({ data, pageContext, children }: Props) => {
   const post = data.mdx
   const siteTitle = data.site.siteMetadata.title
   const featuredImgFluid = post.frontmatter?.featuredImage?.childImageSharp?.fluid
+
   const featuredImageDescription = post.frontmatter?.featuredImageDescription
   const photographerLink = post.frontmatter?.photographerLink
   const photographerName = post.frontmatter?.photographerName
@@ -52,6 +54,10 @@ const BlogPostTemplate = ({ data, pageContext, children }: Props) => {
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
+          imageUrl={constructUrl(
+            data.site.siteMetadata.siteUrl, post.frontmatter.featuredImage?.childImageSharp?.fixed?.src
+          )}
+          imageAlt={post.frontmatter.imageAlt}
         />
         <h1
           style={{
@@ -70,13 +76,24 @@ const BlogPostTemplate = ({ data, pageContext, children }: Props) => {
         >
           {post.frontmatter.date}
         </p>
-        {post.frontmatter?.featuredImage && <Img
-          style={{
-            marginTop: rhythm(.2),
-            marginBottom: rhythm(.3)
-          }}
-          fluid={featuredImgFluid}
-        />}
+        {post.frontmatter?.featuredImage &&
+          <>
+            <Img
+              style={{
+                marginTop: rhythm(.2),
+                marginBottom: rhythm(.3)
+              }}
+              fluid={featuredImgFluid}
+            />
+            {/* <div
+              style={{
+                textAlign: "center",
+                fontSize: "14px",
+                lineHeight: "28px",
+              }}
+              dangerouslySetInnerHTML={{ __html: post.frontmatter.imageTitleHtml }} /> */}
+          </>
+        }
         {featuredImageDescription &&
           <p style={{
             marginBottom: rhythm(1),
@@ -140,6 +157,11 @@ export const pageQuery = graphql`
       siteMetadata {
         title
         author
+        social {
+          twitter
+        }
+        # Add this
+        siteUrl
       }
     }
     mdx(fields: { slug: { eq: $slug } }) {
@@ -152,11 +174,16 @@ export const pageQuery = graphql`
         description
         featuredImage {
           childImageSharp {
+            fixed(height: 600, width: 1200) {
+                src
+            }
             fluid(maxWidth: 800) {
               ...GatsbyImageSharpFluid
             }
           }
         }
+      imageAlt
+      imageTitleHtml
       featuredImageDescription
       photographerLink
       photographerName

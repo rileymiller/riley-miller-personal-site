@@ -7,10 +7,15 @@ type Props = {
   lang?: string
   meta?: []
   title: string
+  imageUrl: string | null
+  imageAlt: string
 }
 
-const SEO = ({ description, lang, meta, title }: Props) => {
-  const { site } = useStaticQuery(
+export const constructUrl = (baseUrl?: string, path?: string) =>
+  (!baseUrl || !path) ? null : `${baseUrl}${path}`;
+
+const SEO = ({ description, lang, meta, title, imageUrl, imageAlt }: Props) => {
+  const { site, ogImageDefault } = useStaticQuery(
     graphql`
       query {
         site {
@@ -18,6 +23,19 @@ const SEO = ({ description, lang, meta, title }: Props) => {
             title
             description
             author
+            social {
+              twitter
+            }
+            # Add this
+            siteUrl
+          }
+        }
+        # Add this
+        ogImageDefault: file(relativePath: {eq: "rm-bg-icon.png"}) { 
+          childImageSharp {
+            fixed(height: 260, width: 260) {
+              src
+            }
           }
         }
       }
@@ -25,6 +43,10 @@ const SEO = ({ description, lang, meta, title }: Props) => {
   )
 
   const metaDescription = description || site.siteMetadata.description
+
+  const defaultImageUrl = constructUrl(site.siteMetadata.siteUrl, ogImageDefault?.childImageSharp?.fixed?.src)
+
+  const ogImageUrl = imageUrl || defaultImageUrl
 
   return (
     <Helmet
@@ -50,6 +72,18 @@ const SEO = ({ description, lang, meta, title }: Props) => {
           property: `og:type`,
           content: `website`,
         },
+        {
+          property: `og:image`,
+          content: ogImageUrl
+        },
+        // If a post has an image, use the larger card. 
+        // Otherwise the default image is just 
+        // a small logo, so use the smaller card.
+        { property: `twitter:card`, content: imageUrl ? `summary_large_image` : `summary`, },
+
+        // Add image alt text
+        // Falls back to default which describes the site logo
+        { property: `twitter:image:alt`, content: imageAlt || "davidagood.com logo", },
         {
           name: `twitter:card`,
           content: `summary`,
