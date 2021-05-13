@@ -83,7 +83,7 @@ const SEO = ({ description, lang, meta, title, imageUrl, imageAlt }: Props) => {
 
         // Add image alt text
         // Falls back to default which describes the site logo
-        { property: `twitter:image:alt`, content: imageAlt || "davidagood.com logo", },
+        { property: `twitter:image:alt`, content: imageAlt || "rileymiller.dev logo", },
         {
           name: `twitter:card`,
           content: `summary`,

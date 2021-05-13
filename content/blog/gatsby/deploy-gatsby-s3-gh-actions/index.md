@@ -2,11 +2,11 @@
 title: "Deploying a Gatsby site to S3 with GitHub Actions"
 date: "2021-01-19"
 description: How to deploy a Gatsby Site to S3 with GitHub Actions
-featuredImage: "./marvin-meyer-unsplash.jpg"
-featuredImageDescription: "Photo from Unsplash by"
-photographerLink: "https://unsplash.com/@marvelous"
-photographerName: "Marvin Meyer"
-imageAlt: "Gatsby Image"
+featuredImage: "./header.png"
+# featuredImageDescription: "Photo from Unsplash by"
+# photographerLink: "https://unsplash.com/@marvelous"
+# photographerName: "Marvin Meyer"
+imageAlt: "Deploying a Gatsby site to S3 with GitHub Actions Header"
 imageTitleHtml: '<span>Photo at <a href="https://unsplash.com/photos/VvKdB1FYNZs" /></span>'
 ---
 
