@@ -33,3 +33,46 @@ export const global = css`
       border-left: 0.3em solid #f99;
     }
   `
+export const flex = css`
+  display: flex;
+`
+
+export const flexColumn = css`
+  display: flex;
+  flex-direction: column;
+`
+
+export const flexCenter = css`
+  justify-content: center;
+  align-items: center;
+`
+
+export const clockwiseRotationAnimation = css`
+      @keyframes clockwiseRotation {
+        from {
+          -webkit-transform: rotate(0deg);
+        }
+        to { 
+          -webkit-transform: rotate(-360deg);
+        }
+      }
+      -webkit-animation-name:             clockwiseRotation; 
+      -webkit-animation-duration:         2s; 
+      -webkit-animation-iteration-count:  infinite;
+      -webkit-animation-timing-function: linear;
+`
+
+export const counterClockwiseRotationAnimation = css`
+      @keyframes counterClockwiseRotation {
+        from {
+          -webkit-transform: rotate(0deg);
+        }
+        to { 
+          -webkit-transform: rotate(360deg);
+        }
+      }
+      -webkit-animation-name:             counterClockwiseRotation; 
+      -webkit-animation-duration:         2s; 
+      -webkit-animation-iteration-count:  infinite;
+      -webkit-animation-timing-function: linear;
+`

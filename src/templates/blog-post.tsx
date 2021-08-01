@@ -85,13 +85,6 @@ const BlogPostTemplate = ({ data, pageContext, children }: Props) => {
               }}
               fluid={featuredImgFluid}
             />
-            {/* <div
-              style={{
-                textAlign: "center",
-                fontSize: "14px",
-                lineHeight: "28px",
-              }}
-              dangerouslySetInnerHTML={{ __html: post.frontmatter.imageTitleHtml }} /> */}
           </>
         }
         {featuredImageDescription &&
@@ -183,7 +176,6 @@ export const pageQuery = graphql`
           }
         }
       imageAlt
-      imageTitleHtml
       featuredImageDescription
       photographerLink
       photographerName

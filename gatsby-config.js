@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Riley's Digital Garden 🌴`,
+    title: `Riley Miller`,
     author: `Riley Miller`,
-    description: `Riley's Digital Garden for life career stuff`,
+    description: `my dank website`,
     siteUrl: `https://www.rileymiller.dev/`,
     social: {
       twitter: `riley_miller00`,

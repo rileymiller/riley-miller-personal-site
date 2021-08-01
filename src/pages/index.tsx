@@ -5,7 +5,7 @@ import { Bio, IntroSection } from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { Global, css } from "@emotion/core"
-import { GLOBAL_COLORS } from "../utils/colors"
+import { colors } from "../utils/colors"
 
 import { rhythm } from "../utils/typography"
 
@@ -29,8 +29,20 @@ const BlogIndex = ({ data }: Props) => {
       <Global
         styles={
           css`
+          html {
+            height: 100%;
+          }
+          body {
+            height: 100%;
+          }
+          #___gatsby {
+            height: 100%;
+          }
+          #gatsby-focus-wrapper {
+            height: 100%;
+          }
             a {
-              color: ${GLOBAL_COLORS.bg_primary};
+              color: ${colors.primaryBase};
               box-shadow:none;
             }
         `
@@ -38,7 +50,7 @@ const BlogIndex = ({ data }: Props) => {
       />
       <Layout location={typeof window !== `undefined` ? window.location : ''} title={siteTitle}>
         <SEO title="Bio" />
-        <Bio />
+        {/* <Bio /> */}
         <IntroSection />
         {/* {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
