@@ -38,7 +38,7 @@ export const IntroSection = () => (
     </p>
 
     <p>
-      now: first engineering hire at <a target="_blank" href="https://spore.build/">Spore</a> 🍄
+      now: CTO at <a target="_blank" href="https://spore.build/">Spore</a> 🍄
 
     </p>
 
