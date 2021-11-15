@@ -29,7 +29,7 @@ export const IntroSection = () => (
 
     <p>in the past i founded a company called <a target="_blank" href="https://www.livelot.com/">LiveLot</a> that used AI to streamline parking on
       college campuses. we had a late pivot to ag security. i also worked at workday straight out of school for 9 months before
-      I quit to build startups
+      I quit to build startups. i love my purty wife. im a Christian. i thank God i get to do what i do
     </p>
 
     <p>
