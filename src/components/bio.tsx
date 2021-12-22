@@ -31,13 +31,13 @@ export const IntroSection = () => (
       now: Cofounder and CTO at <a target="_blank" href="https://spore.build/">Spore</a> 🍄
     </p>
 
-    <p>in the past i founded a company called <a target="_blank" href="https://www.livelot.com/">LiveLot</a> that used AI to streamline parking on
-      college campuses. we had a late pivot to ag security. i also worked at workday straight out of school for 9 months before
-      I quit to build startups. i love my purty wife. im a Christian. i thank God i get to do what i do
+    <p>in the past i founded a company called LiveLot that used CV to streamline parking on
+      college campuses. learned a ton during the 3 years I spent building LiveLot and discovered I want to spend my life building big ideas. i also worked at workday straight out of school for 9 months before
+      I quit to focus on building startups full time. i love my purty wife. i played college football for 5 years. im a Christian. i thank God for the life i get to lead
     </p>
 
     <p>
-    education: metaverse, undergrad: cs at colorado school of mines, masters: cs at colorado school of mines 
+    education: being extremely online, undergrad: cs at colorado school of mines, masters: cs at colorado school of mines 
          (<a target="_blank" href="https://mountainscholar.org/handle/11124/174131">thesis</a>)
     </p>
 
