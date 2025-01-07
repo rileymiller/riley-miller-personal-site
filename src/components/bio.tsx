@@ -28,7 +28,7 @@ export const IntroSection = () => (
     </p>
 
     <p>
-      now: Cofounder and CTO at <a target="_blank" href="https://truffle.vip/">Truffle</a> 🍄
+      now: Product Engineer at <a target="_blank" href="https://getbreezyapp.com/">Breezy</a>
     </p>
 
     <p>in the past i founded a company called LiveLot that used CV to streamline parking on
