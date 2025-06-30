@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark mode colors */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #141414;
+    --bg-tertiary: #1a1a1a;
+    
+    /* Glass effect backgrounds */
+    --bg-glass: rgba(20, 20, 20, 0.7);
+    --bg-glass-hover: rgba(30, 30, 30, 0.8);
+    
+    /* Text colors */
+    --text-primary: #e4e4e7;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    
+    /* Accent colors */
+    --accent-primary: #3b82f6;
+    --accent-secondary: #60a5fa;
+    --accent-glow: 0 0 20px rgba(59, 130, 246, 0.5);
+    
+    /* Borders and effects */
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --blur-glass: blur(10px);
+  }
+
+  html {
+    @apply bg-[var(--bg-primary)] text-[var(--text-primary)];
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  body {
+    @apply min-h-screen;
+    background: radial-gradient(ellipse at top left, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(96, 165, 250, 0.1) 0%, transparent 50%),
+                var(--bg-primary);
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-primary/30 text-white;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-[var(--bg-secondary)];
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-[var(--border-glass)] rounded-full;
+    border: 2px solid var(--bg-secondary);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-[var(--text-muted)];
+  }
+}
+
+@layer components {
+  /* Liquid glass components */
+  .glass-panel {
+    @apply bg-glass-dark backdrop-blur-glass border border-glass-border rounded-xl shadow-glass;
+    transition: all 0.3s ease;
+  }
+
+  .glass-panel:hover {
+    @apply bg-glass-darker;
+    box-shadow: var(--accent-glow), var(--shadow-glass);
+  }
+
+  /* Glass button */
+  .glass-button {
+    @apply px-6 py-3 bg-glass-dark backdrop-blur-glass border border-glass-border rounded-lg;
+    @apply text-[var(--text-primary)] font-medium transition-all duration-300;
+    @apply hover:bg-glass-darker hover:border-primary/30 hover:shadow-glow;
+  }
+
+  /* Glass input */
+  .glass-input {
+    @apply w-full px-4 py-3 bg-glass-dark backdrop-blur-glass border border-glass-border rounded-lg;
+    @apply text-[var(--text-primary)] placeholder-[var(--text-muted)];
+    @apply focus:outline-none focus:border-primary/50 focus:shadow-glow transition-all duration-300;
+  }
+
+  /* Code blocks with glass effect */
+  pre {
+    @apply !bg-glass-dark backdrop-blur-glass border border-glass-border rounded-lg p-6 overflow-x-auto;
+    box-shadow: var(--shadow-glass);
+  }
+
+  pre code {
+    @apply !bg-transparent;
+  }
+
+  /* Inline code */
+  :not(pre) > code {
+    @apply px-1.5 py-0.5 bg-glass-dark backdrop-blur-sm border border-glass-border rounded text-sm;
+  }
+
+  /* Links */
+  a {
+    @apply text-primary hover:text-secondary transition-colors duration-200;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-[var(--text-primary)];
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl mb-6;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl mb-4;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl mb-3;
+  }
+
+  /* Paragraph spacing */
+  p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  /* Lists */
+  ul, ol {
+    @apply mb-4 pl-6;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+
+  li {
+    @apply mb-2;
+  }
+
+  /* Blockquote */
+  blockquote {
+    @apply pl-4 border-l-4 border-primary/50 text-[var(--text-secondary)] italic my-4;
+  }
+}
+
+/* Prism theme overrides for dark mode */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #71717a;
+}
+
+.token.punctuation {
+  color: #a1a1aa;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #60a5fa;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #34d399;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #fbbf24;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #a78bfa;
+}
+
+.token.function,
+.token.class-name {
+  color: #f472b6;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #fbbf24;
+}

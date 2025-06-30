@@ -58,6 +58,16 @@ typings/
 .cache/
 public
 
+# build output
+dist/
+.output/
+
+# astro
+.astro/
+
+# gatsby backup
+.gatsby-backup/
+
 # Mac files
 .DS_Store
 

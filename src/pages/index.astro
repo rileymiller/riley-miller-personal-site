@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
+
+// Sort posts by date, newest first
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Get recent posts for homepage
+const recentPosts = posts.slice(0, 5);
+---
+
+<Layout title="Riley Miller - Personal Site">
+  <div class="max-w-4xl mx-auto">
+    <!-- Hero Section -->
+    <section class="mb-16 text-center">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+        Riley Miller
+      </h1>
+      <p class="text-xl md:text-2xl text-[var(--text-secondary)] mb-8">
+        Software Engineer | Problem Solver | Tech Enthusiast
+      </p>
+      <div class="flex justify-center gap-4">
+        <a href="/blog" class="glass-button">
+          Read Blog
+        </a>
+        <a href="/about" class="glass-button">
+          About Me
+        </a>
+      </div>
+    </section>
+
+    <!-- Introduction -->
+    <section class="glass-panel p-8 mb-16">
+      <h2 class="text-3xl font-bold mb-4">Welcome!</h2>
+      <p class="text-lg text-[var(--text-secondary)] leading-relaxed">
+        I'm a software engineer passionate about building great products and solving complex problems. 
+        This is my personal space where I share thoughts on software development, technology, and my journey in tech.
+      </p>
+    </section>
+
+    <!-- Recent Posts -->
+    <section>
+      <h2 class="text-3xl font-bold mb-8">Recent Posts</h2>
+      <div class="space-y-6">
+        {recentPosts.map((post) => (
+          <article class="glass-panel p-6 hover:scale-[1.02] transition-transform">
+            <a href={`/blog/${post.slug}`} class="block">
+              <h3 class="text-2xl font-semibold mb-2 hover:text-primary transition-colors">
+                {post.data.title}
+              </h3>
+              <time class="text-sm text-[var(--text-muted)]">
+                {post.data.date.toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </time>
+              <p class="mt-3 text-[var(--text-secondary)]">
+                {post.data.description}
+              </p>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="mt-4 flex gap-2">
+                  {post.data.tags.map((tag) => (
+                    <span class="px-3 py-1 bg-glass-dark backdrop-blur-sm border border-glass-border rounded-full text-sm">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </a>
+          </article>
+        ))}
+      </div>
+      
+      {posts.length > 5 && (
+        <div class="mt-8 text-center">
+          <a href="/blog" class="glass-button inline-block">
+            View All Posts →
+          </a>
+        </div>
+      )}
+    </section>
+  </div>
+</Layout>
