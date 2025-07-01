@@ -41,24 +41,29 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="Riley Miller's Blog" href="/rss.xml" />
+    
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="min-h-screen flex flex-col">
-      <header class="sticky top-0 z-50 glass-panel rounded-none border-b border-glass-border">
-        <nav class="container mx-auto px-4 py-4">
+      <header class="py-8">
+        <nav class="container mx-auto px-6 max-w-4xl">
           <div class="flex items-center justify-between">
-            <a href="/" class="text-2xl font-bold hover:text-primary transition-colors">
+            <a href="/" class="text-lg font-medium hover:text-[var(--text-primary)] transition-colors">
               Riley Miller
             </a>
-            <div class="flex items-center gap-6">
-              <a href="/" class="hover:text-primary transition-colors">Home</a>
-              <a href="/blog" class="hover:text-primary transition-colors">Blog</a>
-              <a href="/about" class="hover:text-primary transition-colors">About</a>
+            <div class="flex items-center gap-8 text-sm">
+              <a href="/" class="hover:text-[var(--text-primary)] transition-colors">Home</a>
+              <a href="/blog" class="hover:text-[var(--text-primary)] transition-colors">Blog</a>
+              <a href="/about" class="hover:text-[var(--text-primary)] transition-colors">About</a>
               <a 
                 href="https://github.com/rileymiller" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                class="hover:text-primary transition-colors"
+                class="hover:text-[var(--text-primary)] transition-colors"
               >
                 GitHub
               </a>
@@ -67,17 +72,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         </nav>
       </header>
 
-      <main class="flex-1 container mx-auto px-4 py-12">
+      <main class="flex-1 container mx-auto px-6 max-w-4xl">
         <slot />
       </main>
 
-      <footer class="glass-panel rounded-none border-t border-glass-border mt-auto">
-        <div class="container mx-auto px-4 py-8">
-          <div class="text-center text-[var(--text-secondary)]">
-            <p>&copy; {new Date().getFullYear()} Riley Miller. All rights reserved.</p>
-            <p class="mt-2">
-              Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-secondary">Astro</a>
-            </p>
+      <footer class="py-12 mt-auto">
+        <div class="container mx-auto px-6 max-w-4xl">
+          <div class="text-sm text-[var(--text-muted)]">
+            <p>&copy; {new Date().getFullYear()} Riley Miller</p>
           </div>
         </div>
       </footer>

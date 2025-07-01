@@ -3,43 +3,41 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="About - Riley Miller">
-  <div class="max-w-4xl mx-auto">
-    <h1 class="text-5xl font-bold mb-12">About Me</h1>
+  <div class="py-20">
+    <h1 class="text-4xl mb-16">About</h1>
     
-    <div class="glass-panel p-8 md:p-12">
-      <div class="prose prose-invert prose-lg max-w-none
-        prose-headings:text-[var(--text-primary)]
-        prose-p:text-[var(--text-primary)]
-        prose-a:text-primary prose-a:no-underline hover:prose-a:text-secondary
-        prose-strong:text-[var(--text-primary)]">
-        
-        <p>
-          Hi! I'm Riley Miller, a software engineer passionate about building great products and solving complex problems.
-        </p>
-        
-        <p>
-          This site serves as my personal space on the web where I share my thoughts on software development, 
-          technology trends, and my journey in tech. I believe in continuous learning and enjoy exploring new 
-          technologies and methodologies.
-        </p>
-        
-        <h2>Technical Interests</h2>
-        <ul>
-          <li>Web Development (React, TypeScript, Node.js)</li>
-          <li>Cloud Architecture and DevOps</li>
-          <li>Performance Optimization</li>
-          <li>Open Source Software</li>
-          <li>Developer Tools and Productivity</li>
-        </ul>
-        
-        <h2>Connect</h2>
-        <p>
-          Feel free to connect with me on:
-        </p>
-        <ul>
-          <li><a href="https://github.com/rileymiller" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-          <li><a href="https://twitter.com/riley_miller00" target="_blank" rel="noopener noreferrer">Twitter</a></li>
-        </ul>
+    <div class="prose prose-invert max-w-none
+      prose-headings:text-[var(--text-primary)] prose-headings:font-normal
+      prose-p:text-[var(--text-secondary)]
+      prose-a:text-[var(--text-primary)] prose-a:underline hover:prose-a:no-underline
+      prose-strong:text-[var(--text-primary)]
+      prose-ul:text-[var(--text-secondary)]
+      prose-li:text-[var(--text-secondary)]">
+      
+      <p>
+        Hi! I'm Riley Miller, a software engineer passionate about building great products and solving complex problems.
+      </p>
+      
+      <p>
+        This site serves as my personal space on the web where I share my thoughts on software development, 
+        technology trends, and my journey in tech. I believe in continuous learning and enjoy exploring new 
+        technologies and methodologies.
+      </p>
+      
+      <h2>Technical Interests</h2>
+      <ul>
+        <li>Web Development (React, TypeScript, Node.js)</li>
+        <li>Cloud Architecture and DevOps</li>
+        <li>Performance Optimization</li>
+        <li>Open Source Software</li>
+        <li>Developer Tools and Productivity</li>
+      </ul>
+      
+      <h2>Connect</h2>
+      <div class="flex gap-6 mt-4">
+        <a href="https://github.com/rileymiller" target="_blank" rel="noopener noreferrer" class="text-sm">GitHub</a>
+        <a href="https://twitter.com/riley_miller00" target="_blank" rel="noopener noreferrer" class="text-sm">Twitter</a>
+        <a href="mailto:rmllr000@gmail.com" class="text-sm">Email</a>
       </div>
     </div>
   </div>

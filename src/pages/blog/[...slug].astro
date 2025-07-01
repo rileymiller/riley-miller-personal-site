@@ -19,51 +19,35 @@ const { Content } = await post.render();
 ---
 
 <Layout title={`${post.data.title} - Riley Miller`} description={post.data.description}>
-  <article class="max-w-4xl mx-auto">
-    <header class="mb-12">
-      <h1 class="text-5xl font-bold mb-4">{post.data.title}</h1>
-      <div class="flex items-center gap-4 text-[var(--text-secondary)]">
-        <time>
-          {post.data.date.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-          })}
-        </time>
-        {post.data.tags && post.data.tags.length > 0 && (
-          <>
-            <span>•</span>
-            <div class="flex gap-2">
-              {post.data.tags.map((tag) => (
-                <span class="px-3 py-1 bg-glass-dark backdrop-blur-sm border border-glass-border rounded-full text-sm">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
+  <article class="py-20">
+    <header class="mb-16">
+      <h1 class="text-4xl mb-4">{post.data.title}</h1>
+      <time class="text-sm text-[var(--text-muted)]">
+        {post.data.date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        })}
+      </time>
     </header>
 
-    <div class="glass-panel p-8 md:p-12">
-      <div class="prose prose-invert prose-lg max-w-none
-        prose-headings:text-[var(--text-primary)]
-        prose-p:text-[var(--text-primary)]
-        prose-a:text-primary prose-a:no-underline hover:prose-a:text-secondary
-        prose-strong:text-[var(--text-primary)]
-        prose-code:text-[var(--text-primary)] prose-code:bg-glass-dark prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:border prose-code:border-glass-border
-        prose-pre:bg-glass-dark prose-pre:border prose-pre:border-glass-border
-        prose-blockquote:border-primary/50 prose-blockquote:text-[var(--text-secondary)]
-        prose-ul:text-[var(--text-primary)]
-        prose-ol:text-[var(--text-primary)]
-        prose-li:text-[var(--text-primary)]
-        prose-hr:border-glass-border">
-        <Content />
-      </div>
+    <div class="prose prose-invert max-w-none
+      prose-headings:text-[var(--text-primary)] prose-headings:font-normal
+      prose-p:text-[var(--text-secondary)]
+      prose-a:text-[var(--text-primary)] prose-a:underline hover:prose-a:no-underline
+      prose-strong:text-[var(--text-primary)]
+      prose-code:text-[var(--text-primary)] prose-code:bg-[var(--bg-secondary)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:border prose-code:border-[var(--border-glass)]
+      prose-pre:bg-[var(--bg-secondary)] prose-pre:border prose-pre:border-[var(--border-glass)]
+      prose-blockquote:border-[var(--text-muted)] prose-blockquote:text-[var(--text-secondary)]
+      prose-ul:text-[var(--text-secondary)]
+      prose-ol:text-[var(--text-secondary)]
+      prose-li:text-[var(--text-secondary)]
+      prose-hr:border-[var(--border-glass)]">
+      <Content />
     </div>
 
-    <nav class="mt-12 pt-8 border-t border-glass-border">
-      <a href="/blog" class="glass-button inline-block">
+    <nav class="mt-20 pt-8 border-t border-[var(--border-glass)]">
+      <a href="/blog" class="text-sm hover:text-[var(--text-primary)] transition-colors">
         ← Back to Blog
       </a>
     </nav>
