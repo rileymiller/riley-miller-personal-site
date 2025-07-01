@@ -50,12 +50,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body>
     <div class="min-h-screen flex flex-col">
       <header class="py-8">
-        <nav class="container mx-auto px-6 max-w-4xl">
-          <div class="flex items-center justify-between">
-            <a href="/" class="text-lg font-medium hover:text-[var(--text-primary)] transition-colors">
-              Riley Miller
+        <nav class="container mx-auto px-6">
+          <div class="flex items-center">
+            <a href="/" class="text-lg font-bold hover:text-[var(--text-primary)] transition-colors">
+              RM
             </a>
-            <div class="flex items-center gap-8 text-sm">
+            <div class="flex-1 flex justify-center items-center gap-8 text-sm">
               <a href="/" class="hover:text-[var(--text-primary)] transition-colors">Home</a>
               <a href="/blog" class="hover:text-[var(--text-primary)] transition-colors">Blog</a>
               <a href="/about" class="hover:text-[var(--text-primary)] transition-colors">About</a>
@@ -68,6 +68,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
                 GitHub
               </a>
             </div>
+            <!-- Spacer to balance the logo on the left -->
+            <div class="text-lg font-bold invisible">RM</div>
           </div>
         </nav>
       </header>
@@ -77,9 +79,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       </main>
 
       <footer class="py-12 mt-auto">
-        <div class="container mx-auto px-6 max-w-4xl">
-          <div class="text-sm text-[var(--text-muted)]">
-            <p>&copy; {new Date().getFullYear()} Riley Miller</p>
+        <div class="container mx-auto px-6">
+          <div class="flex justify-center gap-6 text-sm text-[var(--text-muted)]">
+            <a href="mailto:rmllr000@gmail.com" class="hover:text-[var(--text-primary)] transition-colors">email</a>
+            <a href="https://twitter.com/riley_miller00" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--text-primary)] transition-colors">twitter</a>
+            <a href="https://github.com/rileymiller" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--text-primary)] transition-colors">github</a>
+            <a href="https://linkedin.com/in/rileymiller" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--text-primary)] transition-colors">linkedin</a>
           </div>
         </div>
       </footer>

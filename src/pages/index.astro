@@ -14,39 +14,56 @@ const recentPosts = posts.slice(0, 5);
 ---
 
 <Layout title="Riley Miller">
-  <div class="py-20">
+  <div class="py-20 max-w-3xl mx-auto">
     <!-- Hero Section -->
-    <section class="mb-20">
-      <h1 class="text-4xl mb-4">
-        Riley Miller
+    <section class="mb-20 text-center">
+      <h1 class="text-5xl mb-6 font-normal">
+        Work. Hobby. <span class="text-[var(--accent-primary)]">Open Source</span>.
       </h1>
-      <p class="text-[var(--text-secondary)] mb-8">
-        Software Engineer
+      <p class="text-[var(--text-secondary)] max-w-2xl mx-auto">
+        I'm a software engineer passionate about <span class="text-[var(--text-primary)]">building in public</span>. 
+        Here you can navigate to <span class="text-[var(--text-primary)]">{posts.length} different</span> blog posts, 
+        projects, and thoughts I've shared. Some are still active, others have been discontinued.
       </p>
-      <p class="text-[var(--text-secondary)] max-w-2xl">
-        I'm a software engineer passionate about building great products and solving complex problems. 
-        This is my personal space where I share thoughts on software development, technology, and my journey in tech.
-      </p>
+    </section>
+
+    <!-- Featured Projects -->
+    <section class="mb-20">
+      <h2 class="text-2xl mb-8">Featured Projects</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <a href="https://github.com/rileymiller" target="_blank" rel="noopener noreferrer" class="group block p-6 border border-[var(--border-glass)] rounded-lg hover:border-[var(--text-muted)] transition-colors">
+          <h3 class="text-lg mb-2 group-hover:text-[var(--text-primary)] transition-colors">Personal Site</h3>
+          <p class="text-sm text-[var(--text-secondary)] mb-4">This website built with Astro</p>
+          <p class="text-xs text-[var(--text-muted)] uppercase tracking-wider">Open Source</p>
+        </a>
+        
+        <a href="https://github.com/rileymiller" target="_blank" rel="noopener noreferrer" class="group block p-6 border border-[var(--border-glass)] rounded-lg hover:border-[var(--text-muted)] transition-colors">
+          <h3 class="text-lg mb-2 group-hover:text-[var(--text-primary)] transition-colors">Projects</h3>
+          <p class="text-sm text-[var(--text-secondary)] mb-4">Various experiments and tools</p>
+          <p class="text-xs text-[var(--text-muted)] uppercase tracking-wider">Active Development</p>
+        </a>
+      </div>
     </section>
 
     <!-- Recent Posts -->
     <section>
-      <h2 class="text-2xl mb-8">Recent Posts</h2>
-      <div class="space-y-12">
+      <h2 class="text-2xl mb-8">All Posts</h2>
+      <div class="space-y-8">
         {recentPosts.map((post) => (
           <article>
-            <a href={`/blog/${post.slug}`} class="group">
-              <h3 class="text-lg mb-2 group-hover:text-[var(--text-primary)] transition-colors">
-                {post.data.title}
-              </h3>
-              <time class="text-sm text-[var(--text-muted)]">
-                {post.data.date.toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })}
-              </time>
-              <p class="mt-2 text-[var(--text-secondary)]">
+            <a href={`/blog/${post.slug}`} class="group block">
+              <div class="flex items-baseline justify-between">
+                <h3 class="text-lg group-hover:text-[var(--text-primary)] transition-colors">
+                  {post.data.title}
+                </h3>
+                <time class="text-sm text-[var(--text-muted)] ml-4">
+                  {post.data.date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short'
+                  })}
+                </time>
+              </div>
+              <p class="mt-1 text-sm text-[var(--text-secondary)]">
                 {post.data.description}
               </p>
             </a>
@@ -55,9 +72,9 @@ const recentPosts = posts.slice(0, 5);
       </div>
       
       {posts.length > 5 && (
-        <div class="mt-12">
+        <div class="mt-12 text-center">
           <a href="/blog" class="text-sm hover:text-[var(--text-primary)] transition-colors">
-            View all posts →
+            View all {posts.length} posts →
           </a>
         </div>
       )}
