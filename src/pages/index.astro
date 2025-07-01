@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import JerusalemCross from '../components/JerusalemCross';
 
 const posts = await getCollection('blog', ({ data }) => {
   return data.draft !== true;
@@ -14,18 +15,28 @@ const recentPosts = posts.slice(0, 5);
 ---
 
 <Layout title="Riley Miller">
-  <div class="py-32 max-w-2xl mx-auto">
-    <!-- Hero Section -->
-    <section class="mb-32 text-center">
-      <h1 class="text-5xl mb-4 font-normal">
-        Riley Miller
-      </h1>
-      <p class="text-lg text-[var(--text-secondary)] mb-2">
-        Staff Software Engineer at <a href="https://breezy.hr" target="_blank" rel="noopener noreferrer" class="text-[var(--text-primary)] hover:underline">Breezy</a>
-      </p>
-      <p class="text-[var(--text-secondary)]">
-        Customer-obsessed Product Engineer who ships
-      </p>
-    </section>
+  <div class="relative">
+    <!-- Jerusalem Cross Background -->
+    <div class="fixed inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+      <div class="w-[600px] h-[600px]">
+        <JerusalemCross client:idle />
+      </div>
+    </div>
+    
+    <!-- Content -->
+    <div class="relative z-10 py-32 max-w-2xl mx-auto">
+      <!-- Hero Section -->
+      <section class="mb-32 text-center">
+        <h1 class="text-5xl mb-4 font-normal">
+          Riley Miller
+        </h1>
+        <p class="text-lg text-[var(--text-secondary)] mb-2">
+          Staff Software Engineer at <a href="https://breezy.hr" target="_blank" rel="noopener noreferrer" class="text-[var(--text-primary)] hover:underline">Breezy</a>
+        </p>
+        <p class="text-[var(--text-secondary)]">
+          Customer-obsessed Product Engineer who ships
+        </p>
+      </section>
+    </div>
   </div>
 </Layout>
