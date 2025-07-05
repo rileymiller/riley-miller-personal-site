@@ -143,8 +143,12 @@ const JerusalemCross: React.FC<{ className?: string }> = ({ className = '' }) =>
     // Raycaster for mouse interaction
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
+    const mouseWorld = new THREE.Vector3();
     
-    // Handle mouse move for cursor
+    // Store target rotations for smooth animation
+    const targetRotations = smallCrosses.map(() => ({ x: 0, y: 0, z: 0 }));
+    
+    // Handle mouse move for cursor and tilt effect
     const handleMouseMove = (event: MouseEvent) => {
       if (!mountRef.current) return;
       
@@ -152,9 +156,12 @@ const JerusalemCross: React.FC<{ className?: string }> = ({ className = '' }) =>
       mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
       
+      // Convert mouse position to world coordinates
+      mouseWorld.set(mouse.x * 3, mouse.y * 3, 0);
+      
+      // Update cursor based on hover
       raycaster.setFromCamera(mouse, camera);
       const intersects = raycaster.intersectObjects(smallCrosses);
-      
       mountRef.current.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
     };
     
@@ -194,7 +201,7 @@ const JerusalemCross: React.FC<{ className?: string }> = ({ className = '' }) =>
       crossGroup.rotation.y += 0.005;
       crossGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
       
-      // Physics-based swinging motion for small crosses
+      // Physics-based swinging motion for small crosses with mouse following
       const time = Date.now() * 0.001;
       smallCrosses.forEach((cross, index) => {
         const physics = crossPhysics[index];
@@ -208,9 +215,39 @@ const JerusalemCross: React.FC<{ className?: string }> = ({ className = '' }) =>
         const swingAmplitude = 0.15 * physics.amplitude;
         const swayAmplitude = 0.1 * physics.amplitude;
         
-        // Apply physics velocity to rotation
-        cross.rotation.x = Math.sin(time * 1.2 + phaseOffset + physics.velocity) * swingAmplitude;
-        cross.rotation.z = Math.sin(time * 0.8 + phaseOffset + Math.PI * 0.25) * swayAmplitude;
+        // Calculate direction from cross to mouse
+        const crossWorldPos = new THREE.Vector3();
+        cross.getWorldPosition(crossWorldPos);
+        
+        const dirToMouse = new THREE.Vector3()
+          .subVectors(mouseWorld, crossWorldPos)
+          .normalize();
+        
+        // Calculate tilt angles based on mouse direction
+        const tiltStrength = 0.3; // How much the crosses tilt
+        const targetTiltX = dirToMouse.y * tiltStrength;
+        const targetTiltZ = -dirToMouse.x * tiltStrength;
+        
+        // Store target rotations
+        targetRotations[index].x = targetTiltX;
+        targetRotations[index].z = targetTiltZ;
+        
+        // Smoothly interpolate to target rotation
+        const lerpFactor = 0.1;
+        const mouseTiltX = THREE.MathUtils.lerp(
+          cross.rotation.x - Math.sin(time * 1.2 + phaseOffset + physics.velocity) * swingAmplitude,
+          targetRotations[index].x,
+          lerpFactor
+        );
+        const mouseTiltZ = THREE.MathUtils.lerp(
+          cross.rotation.z - Math.sin(time * 0.8 + phaseOffset + Math.PI * 0.25) * swayAmplitude,
+          targetRotations[index].z,
+          lerpFactor
+        );
+        
+        // Apply combined rotation (swing + mouse tilt)
+        cross.rotation.x = Math.sin(time * 1.2 + phaseOffset + physics.velocity) * swingAmplitude + mouseTiltX;
+        cross.rotation.z = Math.sin(time * 0.8 + phaseOffset + Math.PI * 0.25) * swayAmplitude + mouseTiltZ;
         cross.rotation.y = Math.sin(time * 0.6 + phaseOffset) * 0.05 * physics.amplitude;
       });
       
