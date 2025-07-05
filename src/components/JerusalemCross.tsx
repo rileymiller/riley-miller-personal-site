@@ -70,8 +70,8 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       pointLight2.position.set(-10, -10, 10)
       scene.add(pointLight2)
 
-      // Create Main Cross Geometry with bookends (potent cross)
-      const createMainCrossGeometry = (
+      // Create Potent Cross Geometry with bookends (potent cross)
+      const createPotentCrossGeometry = (
         width: number,
         height: number,
         depth: number,
@@ -174,28 +174,31 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         return new THREE.ExtrudeGeometry(shape, extrudeSettings)
       }
 
-      // Glowing metallic material
+      // Iridescent metallic material
       const material = new THREE.MeshPhysicalMaterial({
-        color: 0xe0e0e0,
-        emissive: 0x404040,
-        emissiveIntensity: 0.3,
+        color: 0xffffff,
+        emissive: 0x222222,
+        emissiveIntensity: 0.1,
         metalness: 0.9,
         roughness: 0.1,
         clearcoat: 1.0,
         clearcoatRoughness: 0.0,
         reflectivity: 1.0,
         ior: 2.5,
+        iridescence: 1.0,
+        iridescenceIOR: 2.0,
+        iridescenceThicknessRange: [100, 400],
       })
 
       // Create main cross - thin and tall
       const mainCross = new THREE.Mesh(
-        createMainCrossGeometry(2.8, 2.8, 0.2, 0.15),
+        createPotentCrossGeometry(2.8, 2.8, 0.2, 0.15),
         material
       )
       scene.add(mainCross)
 
       // Create four smaller crosses - skinnier
-      const smallCrossGeometry = createGreekCrossGeometry(0.4, 0.4, 0.15, 0.04)
+      const smallCrossGeometry = createGreekCrossGeometry(0.5, 0.5, 0.15, 0.04)
 
       // Position in center of each quadrant
       // Main cross extends to ±1.4 horizontally and ±1.4 vertically
@@ -255,7 +258,7 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         // Gentle rotation for the entire group
         crossGroup.rotation.y += 0.005
         crossGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1
-
+        
         // Physics-based swinging motion for small crosses with mouse following
         const time = Date.now() * 0.001
         smallCrosses.forEach((cross, index) => {
