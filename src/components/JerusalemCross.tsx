@@ -25,8 +25,6 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       const width = mountRef.current.clientWidth
       const height = mountRef.current.clientHeight
 
-      console.log(width, height)
-
       // Scene setup
       const scene = new THREE.Scene()
       scene.background = null // Transparent background
@@ -72,8 +70,73 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       pointLight2.position.set(-10, -10, 10)
       scene.add(pointLight2)
 
-      // Create Jerusalem Cross geometry
-      const createCrossGeometry = (
+      // Create Main Cross Geometry with bookends (potent cross)
+      const createMainCrossGeometry = (
+        width: number,
+        height: number,
+        depth: number,
+        armThickness: number
+      ) => {
+        const shape = new THREE.Shape()
+
+        // Create cross shape with bookends
+        const w = width / 2
+        const h = height / 2
+        const armW = armThickness
+        const bookendWidth = armThickness * 3.0 // Width of the bookend
+        const bookendOffset = armThickness // How far from the edge
+
+        // Start from top bookend
+        shape.moveTo(-bookendWidth, h)
+        shape.lineTo(bookendWidth, h)
+        shape.lineTo(bookendWidth, h - bookendOffset)
+        shape.lineTo(armW, h - bookendOffset)
+        shape.lineTo(armW, armW)
+
+        // Right arm with bookend
+        shape.lineTo(w - bookendOffset, armW)
+        shape.lineTo(w - bookendOffset, bookendWidth)
+        shape.lineTo(w, bookendWidth)
+        shape.lineTo(w, -bookendWidth)
+        shape.lineTo(w - bookendOffset, -bookendWidth)
+        shape.lineTo(w - bookendOffset, -armW)
+        shape.lineTo(armW, -armW)
+
+        // Bottom arm with bookend
+        shape.lineTo(armW, -h + bookendOffset)
+        shape.lineTo(bookendWidth, -h + bookendOffset)
+        shape.lineTo(bookendWidth, -h)
+        shape.lineTo(-bookendWidth, -h)
+        shape.lineTo(-bookendWidth, -h + bookendOffset)
+        shape.lineTo(-armW, -h + bookendOffset)
+        shape.lineTo(-armW, -armW)
+
+        // Left arm with bookend
+        shape.lineTo(-w + bookendOffset, -armW)
+        shape.lineTo(-w + bookendOffset, -bookendWidth)
+        shape.lineTo(-w, -bookendWidth)
+        shape.lineTo(-w, bookendWidth)
+        shape.lineTo(-w + bookendOffset, bookendWidth)
+        shape.lineTo(-w + bookendOffset, armW)
+        shape.lineTo(-armW, armW)
+
+        // Close at top
+        shape.lineTo(-armW, h - bookendOffset)
+        shape.lineTo(-bookendWidth, h - bookendOffset)
+        shape.closePath()
+
+        const extrudeSettings = {
+          depth: depth,
+          bevelEnabled: true,
+          bevelThickness: 0.02,
+          bevelSize: 0.02,
+          bevelSegments: 8,
+        }
+
+        return new THREE.ExtrudeGeometry(shape, extrudeSettings)
+      }
+      // Create Greek Cross geometry
+      const createGreekCrossGeometry = (
         width: number,
         height: number,
         depth: number,
@@ -126,13 +189,13 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
 
       // Create main cross - thin and tall
       const mainCross = new THREE.Mesh(
-        createCrossGeometry(2.8, 2.8, 0.2, 0.15),
+        createMainCrossGeometry(2.8, 2.8, 0.2, 0.15),
         material
       )
       scene.add(mainCross)
 
       // Create four smaller crosses - skinnier
-      const smallCrossGeometry = createCrossGeometry(0.4, 0.4, 0.15, 0.04)
+      const smallCrossGeometry = createGreekCrossGeometry(0.4, 0.4, 0.15, 0.04)
 
       // Position in center of each quadrant
       // Main cross extends to ±1.4 horizontally and ±1.4 vertically
@@ -183,32 +246,6 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
           intersects.length > 0 ? "pointer" : "default"
       }
 
-      // Handle mouse click
-      const handleClick = (event: MouseEvent) => {
-        if (!mountRef.current) return
-
-        const rect = mountRef.current.getBoundingClientRect()
-        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
-        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
-
-        raycaster.setFromCamera(mouse, camera)
-
-        // Check intersection with small crosses
-        const intersects = raycaster.intersectObjects(smallCrosses, true)
-
-        if (intersects.length > 0) {
-          const clickedCross = intersects[0].object
-          const crossIndex = smallCrosses.indexOf(clickedCross as any)
-
-          if (crossIndex !== -1) {
-            // Apply impulse to the clicked cross
-            crossPhysics[crossIndex].velocity += 0.5
-            crossPhysics[crossIndex].amplitude = 3 // Increase amplitude temporarily
-          }
-        }
-      }
-
-      mountRef.current.addEventListener("click", handleClick)
       mountRef.current.addEventListener("mousemove", handleMouseMove)
 
       // Animation
@@ -216,8 +253,8 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         requestAnimationFrame(animate)
 
         // Gentle rotation for the entire group
-        // crossGroup.rotation.y += 0.005
-        // crossGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1
+        crossGroup.rotation.y += 0.005
+        crossGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1
 
         // Physics-based swinging motion for small crosses with mouse following
         const time = Date.now() * 0.001
@@ -303,7 +340,6 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       // Cleanup
       return () => {
         window.removeEventListener("resize", handleResize)
-        mountRef.current?.removeEventListener("click", handleClick)
         mountRef.current?.removeEventListener("mousemove", handleMouseMove)
         if (
           mountRef.current &&
