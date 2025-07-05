@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
+
+// Sort posts by date, newest first
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="Blog - Riley Miller">
+  <div class="py-20">
+    <h1 class="text-4xl mb-16">Blog</h1>
+    
+    <div class="space-y-16">
+      {posts.map((post) => (
+        <article>
+          <a href={`/blog/${post.slug}`} class="group">
+            <h2 class="text-xl mb-2 group-hover:text-[var(--text-primary)] transition-colors">
+              {post.data.title}
+            </h2>
+            <time class="text-sm text-[var(--text-muted)]">
+              {post.data.date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </time>
+            <p class="mt-3 text-[var(--text-secondary)]">
+              {post.data.description}
+            </p>
+          </a>
+        </article>
+      ))}
+    </div>
+    
+    {posts.length === 0 && (
+      <div class="text-center">
+        <p class="text-[var(--text-secondary)]">
+          No blog posts yet. Check back soon!
+        </p>
+      </div>
+    )}
+  </div>
+</Layout>

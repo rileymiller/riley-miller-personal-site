@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About - Riley Miller">
+  <div class="py-20">
+    <h1 class="text-4xl mb-16">About</h1>
+    
+    <div class="prose prose-invert max-w-none
+      prose-headings:text-[var(--text-primary)] prose-headings:font-normal
+      prose-p:text-[var(--text-secondary)]
+      prose-a:text-[var(--text-primary)] prose-a:underline hover:prose-a:no-underline
+      prose-strong:text-[var(--text-primary)]
+      prose-ul:text-[var(--text-secondary)]
+      prose-li:text-[var(--text-secondary)]">
+      
+      <p>
+        Hi! I'm Riley Miller, a software engineer passionate about building great products and solving complex problems.
+      </p>
+      
+      <p>
+        Currently, I'm a Staff AI Engineer at Breezy, where I'm building the technical foundation for a company that's transforming how HVAC contractors run their businesses. 
+        Previously, I've worked at Workday and co-founded Truffle, where I served as CTO. 
+        I've also taught as an Adjunct Professor at Colorado School of Mines, sharing my 
+        knowledge in Software Engineering and Data Structures.
+      </p>
+      
+      <p>
+        This site serves as my personal space on the web where I share my thoughts on software development, 
+        technology trends, and my journey in tech. I believe in continuous learning and enjoy exploring new 
+        technologies and methodologies.
+      </p>
+      
+      <h2>Professional Experience</h2>
+      <div class="space-y-6 mb-8">
+        <div>
+          <h3 class="text-lg font-medium">Staff AI Engineer</h3>
+          <p class="text-sm text-[var(--text-muted)]">Breezy • Sep 2023 - Present</p>
+          <div class="mt-2 text-sm space-y-2">
+            <p>Joined Breezy as one of the first engineers during the early stages when we had just a handful of customers. Now we're experiencing explosive growth and it's been an incredible journey building the technical foundation for a company that's transforming how HVAC contractors run their businesses.</p>
+            <p>As one of two full-time engineers (alongside the founding engineer), I've worn many hats - from architecting our AI Voice Agent to modernizing our entire infrastructure.</p>
+            <p class="font-medium mt-3">Key accomplishments:</p>
+            <ul class="list-disc list-inside space-y-1 ml-2">
+              <li>Built an AI Voice Agent using Vapi, OpenAI GPT-4o, and Twilio that's now deployed across our customer base including several of our largest customers. The voice agent has handled thousands of phone calls saving our customers thousands in payroll expenses and becoming one of our key selling points during demos.</li>
+              <li>Shipped dozens of revenue-driving features including: AI CSR, Reporting, Integrated SMS (Twilio), Online Booking, Automated Review Management, AI-Generated Service History (GPT-4o), Map-based Maintenance Opportunity Finder (PostGIS), Integrated Lending and Prequalification (Wisetack), Card on File (Tilled), Bulk Pricebook Management & Pricebook Photos (Flatfile, Lambda), Invoices, and more</li>
+              <li>Led our infrastructure modernization from manual EC2 deployments to Kubernetes (EKS) with GitOps (FluxCD), championed web client data rearchitecture to Hasura (cut feature dev time in half), established Cypress E2E testing for core module to uplevel quality and allow our eng team to ship quickly with confidence.</li>
+              <li>Architected our data-ingestion pipeline to support customer data migrations using Hatchet, EKS, and microservices — crucial infrastructure to make data migrations more efficient in order to go upmarket.</li>
+              <li>Pioneered AI-assisted development workflows using Claude Code, Neon, and Docker that have significantly boosted our small team's productivity.</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-medium">Co-Founder, CTO</h3>
+          <p class="text-sm text-[var(--text-muted)]">Truffle • Jun 2021 - Jan 2023</p>
+          <p class="mt-2 text-sm">First engineering hire, grew into CTO and cofounder role. Built real-time systems for creator analytics</p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-medium">Co-Founder</h3>
+          <p class="text-sm text-[var(--text-muted)]">LiveLot • Sep 2018 - May 2021</p>
+          <p class="mt-2 text-sm">Started AI-powered parking company providing real-time spot counts and analytics. Winner of Campus Solar Challenge</p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-medium">Software Development Engineer</h3>
+          <p class="text-sm text-[var(--text-muted)]">Workday • May 2018 - May 2021</p>
+          <p class="mt-2 text-sm">Full-stack development in Productivity Apps team using TypeScript, Redux, and modern tooling</p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-medium">Adjunct Professor</h3>
+          <p class="text-sm text-[var(--text-muted)]">Colorado School of Mines • 2020</p>
+          <p class="mt-2 text-sm">Taught Software Engineering (CSCI306) and Data Structures in C++ courses</p>
+        </div>
+      </div>
+      
+      <h2>Education</h2>
+      <div class="space-y-4 mb-8">
+        <div>
+          <h3 class="text-lg font-medium">Master's Degree, Computer Science</h3>
+          <p class="text-sm text-[var(--text-muted)]">Colorado School of Mines</p>
+          <p class="mt-2 text-sm">Thesis: Topic modeling on Amazon MTurk for crowdsourcing research</p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-medium">B.S. Computer Science</h3>
+          <p class="text-sm text-[var(--text-muted)]">Colorado School of Mines</p>
+          <p class="mt-2 text-sm">McBride Honors Minor in Public Affairs • Varsity Football</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</Layout>

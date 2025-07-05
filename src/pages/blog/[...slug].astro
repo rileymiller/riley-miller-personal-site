@@ -1,0 +1,114 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+type Props = {
+  post: CollectionEntry<'blog'>;
+};
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Dynamically import the featured image if it exists
+let featuredImageModule;
+if (post.data.featuredImage) {
+  const images = import.meta.glob<{ default: ImageMetadata }>('/src/content/blog/**/*.{jpg,jpeg,png,gif,webp}');
+  
+  // Handle different image path patterns
+  let imagePath;
+  
+  if (post.data.featuredImage.startsWith('../assets/')) {
+    // Image in shared assets folder (e.g., "../assets/spring-boot/spring-boot-1-mtns.jpg")
+    const assetPath = post.data.featuredImage.replace('../assets/', '');
+    imagePath = `/src/content/blog/assets/${assetPath}`;
+  } else if (post.data.featuredImage.startsWith('./')) {
+    // Image co-located with post (e.g., "./header.png")
+    imagePath = `/src/content/blog/${post.slug}/${post.data.featuredImage.substring(2)}`;
+  } else if (post.data.featuredImage.startsWith('../')) {
+    // Other relative paths
+    const filename = post.data.featuredImage.split('/').pop();
+    imagePath = `/src/content/blog/assets/${filename}`;
+  } else {
+    // Direct filename
+    imagePath = `/src/content/blog/${post.slug}/${post.data.featuredImage}`;
+  }
+  
+  if (images[imagePath]) {
+    featuredImageModule = await images[imagePath]();
+  }
+}
+---
+
+<Layout title={`${post.data.title} - Riley Miller`} description={post.data.description}>
+  <article class="py-20">
+    <header class="mb-16">
+      <h1 class="text-4xl mb-4">{post.data.title}</h1>
+      <time class="text-sm text-[var(--text-muted)]">
+        {post.data.date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        })}
+      </time>
+    </header>
+
+    {featuredImageModule && (
+      <figure class="mb-16">
+        <Image
+          src={featuredImageModule.default}
+          alt={post.data.featuredImageDescription || post.data.title}
+          class="w-full rounded-lg grayscale"
+          loading="eager"
+          quality={80}
+        />
+        {post.data.photographerName && (
+          <figcaption class="mt-4 text-sm text-center text-[var(--text-muted)]">
+            {post.data.featuredImageDescription || "Photo from Unsplash"} 
+            {post.data.photographerLink ? (
+              <a 
+                href={post.data.photographerLink} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="underline hover:no-underline"
+              >
+                {post.data.photographerName}
+              </a>
+            ) : (
+              <span>{post.data.photographerName}</span>
+            )}
+          </figcaption>
+        )}
+      </figure>
+    )}
+
+    <div class="prose prose-invert max-w-none
+      prose-headings:text-[var(--text-primary)] prose-headings:font-normal
+      prose-p:text-[var(--text-secondary)]
+      prose-a:text-[var(--text-primary)] prose-a:underline hover:prose-a:no-underline
+      prose-strong:text-[var(--text-primary)]
+      prose-code:text-[var(--text-primary)] prose-code:bg-[var(--bg-secondary)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:border prose-code:border-[var(--border-glass)]
+      prose-pre:bg-[var(--bg-secondary)] prose-pre:border prose-pre:border-[var(--border-glass)]
+      prose-blockquote:border-[var(--text-muted)] prose-blockquote:text-[var(--text-secondary)]
+      prose-ul:text-[var(--text-secondary)]
+      prose-ol:text-[var(--text-secondary)]
+      prose-li:text-[var(--text-secondary)]
+      prose-hr:border-[var(--border-glass)]">
+      <Content />
+    </div>
+
+    <nav class="mt-20 pt-8 border-t border-[var(--border-glass)]">
+      <a href="/blog" class="text-sm hover:text-[var(--text-primary)] transition-colors">
+        ← Back to Blog
+      </a>
+    </nav>
+  </article>
+</Layout>

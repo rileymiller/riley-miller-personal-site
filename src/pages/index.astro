@@ -1,0 +1,77 @@
+---
+import Layout from "../layouts/Layout.astro"
+import { getCollection } from "astro:content"
+import JerusalemCross from "../components/JerusalemCross.tsx"
+
+const posts = await getCollection("blog", ({ data }) => {
+  return data.draft !== true
+})
+
+// Sort posts by date, newest first
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+
+// Get recent posts for homepage
+const recentPosts = posts.slice(0, 5)
+---
+
+<Layout title="Riley Miller">
+  <div class="relative">
+    <!-- Desktop Layout -->
+    <div
+      class="hidden lg:flex items-center justify-center lg:gap-16 min-h-screen relative z-10"
+    >
+      <!-- Hero Section - Left Side -->
+      <div class="w-2/5 flex justify-end">
+        <section class="max-w-md text-left">
+          <h1 class="text-5xl mb-4 font-normal text-white">Riley Miller</h1>
+          <p class="text-lg text-gray-300 mb-2">
+            Staff AI Engineer at <a
+              href="https://getbreezyapp.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-300 hover:underline hover:text-white">Breezy</a
+            >
+          </p>
+          <p class="text-gray-400">
+            Customer-obsessed Product Engineer who ships
+          </p>
+        </section>
+      </div>
+
+      <!-- Jerusalem Cross - Right Side -->
+      <div class="w-3/5 flex justify-start">
+        <div class="w-[600px] h-[500px] flex-1 opacity-80">
+          <JerusalemCross client:load />
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Layout -->
+    <div class="lg:hidden flex flex-col items-center min-h-screen relative z-10">
+      <!-- Jerusalem Cross - Top -->
+      <div class="pt-16 pb-8">
+        <div class="w-[150px] h-[150px] opacity-80">
+          <JerusalemCross client:load />
+        </div>
+      </div>
+
+      <!-- Hero Section -->
+      <div class="px-6 pb-16">
+        <section class="text-center">
+          <h1 class="text-4xl mb-4 font-normal text-white">Riley Miller</h1>
+          <p class="text-lg text-gray-300 mb-2">
+            Staff AI Engineer at <a
+              href="https://getbreezyapp.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-300 hover:underline hover:text-white">Breezy</a
+            >
+          </p>
+          <p class="text-gray-400">
+            Customer-obsessed Product Engineer who ships
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+</Layout>
