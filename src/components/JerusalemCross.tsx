@@ -135,13 +135,14 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       const smallCrossGeometry = createCrossGeometry(0.4, 0.4, 0.15, 0.04)
 
       // Position in center of each quadrant
-      // Main cross extends to ±1.1 horizontally and ±1.6 vertically
-      // So center of quadrants would be at:
+      // Main cross extends to ±1.4 horizontally and ±1.4 vertically
+      // Arm thickness is 0.15, so quadrants are from ±0.15 to ±1.4
+      // Center of quadrants would be at:
       const positions = [
-        { x: 0.8, y: 1.0 }, // Top right quadrant center
-        { x: -0.8, y: 1.0 }, // Top left quadrant center
-        { x: 0.8, y: -1.0 }, // Bottom right quadrant center
-        { x: -0.8, y: -1.0 }, // Bottom left quadrant center
+        { x: 0.775, y: 0.775 }, // Top right quadrant center
+        { x: -0.775, y: 0.775 }, // Top left quadrant center
+        { x: 0.775, y: -0.775 }, // Bottom right quadrant center
+        { x: -0.775, y: -0.775 }, // Bottom left quadrant center
       ]
 
       const smallCrosses = positions.map(pos => {
@@ -197,7 +198,7 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
 
         if (intersects.length > 0) {
           const clickedCross = intersects[0].object
-          const crossIndex = smallCrosses.indexOf(clickedCross as THREE.Mesh)
+          const crossIndex = smallCrosses.indexOf(clickedCross as any)
 
           if (crossIndex !== -1) {
             // Apply impulse to the clicked cross
