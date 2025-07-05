@@ -6,6 +6,14 @@ const JerusalemCross: React.FC<{ className?: string }> = ({ className = '' }) =>
 
   useEffect(() => {
     if (!mountRef.current) return;
+    
+    // Physics state for each small cross
+    const crossPhysics = [
+      { velocity: 0, amplitude: 1, damping: 0.95 },
+      { velocity: 0, amplitude: 1, damping: 0.95 },
+      { velocity: 0, amplitude: 1, damping: 0.95 },
+      { velocity: 0, amplitude: 1, damping: 0.95 }
+    ];
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -27,26 +35,43 @@ const JerusalemCross: React.FC<{ className?: string }> = ({ className = '' }) =>
     renderer.setPixelRatio(window.devicePixelRatio);
     mountRef.current.appendChild(renderer.domElement);
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    // Enhanced lighting for metallic reflections
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(5, 5, 5);
-    scene.add(directionalLight);
+    // Key light
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    keyLight.position.set(5, 10, 5);
+    keyLight.castShadow = true;
+    scene.add(keyLight);
 
-    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4);
-    directionalLight2.position.set(-5, -5, -5);
-    scene.add(directionalLight2);
+    // Fill light
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    fillLight.position.set(-5, 0, 5);
+    scene.add(fillLight);
+
+    // Rim light for edge highlights
+    const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    rimLight.position.set(0, 5, -10);
+    scene.add(rimLight);
+
+    // Point lights for specular highlights
+    const pointLight1 = new THREE.PointLight(0xffffff, 0.5);
+    pointLight1.position.set(10, 10, 10);
+    scene.add(pointLight1);
+
+    const pointLight2 = new THREE.PointLight(0xffffff, 0.3);
+    pointLight2.position.set(-10, -10, 10);
+    scene.add(pointLight2);
 
     // Create Jerusalem Cross geometry
-    const createCrossGeometry = (width: number, height: number, depth: number) => {
+    const createCrossGeometry = (width: number, height: number, depth: number, armThickness: number) => {
       const shape = new THREE.Shape();
       
-      // Create cross shape
+      // Create cross shape with specified arm thickness
       const w = width / 2;
       const h = height / 2;
-      const armW = w * 0.3;
+      const armW = armThickness;
       
       shape.moveTo(-armW, h);
       shape.lineTo(armW, h);
@@ -73,26 +98,34 @@ const JerusalemCross: React.FC<{ className?: string }> = ({ className = '' }) =>
       return new THREE.ExtrudeGeometry(shape, extrudeSettings);
     };
 
-    // Material with subtle metallic look
+    // Glowing metallic material
     const material = new THREE.MeshPhysicalMaterial({
-      color: 0x888888,
-      metalness: 0.7,
-      roughness: 0.3,
-      clearcoat: 0.5,
-      clearcoatRoughness: 0.3,
+      color: 0xe0e0e0,
+      emissive: 0x404040,
+      emissiveIntensity: 0.3,
+      metalness: 0.9,
+      roughness: 0.1,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.0,
+      reflectivity: 1.0,
+      ior: 2.5,
     });
 
-    // Create main cross
-    const mainCross = new THREE.Mesh(createCrossGeometry(2, 2.5, 0.2), material);
+    // Create main cross - thin and tall
+    const mainCross = new THREE.Mesh(createCrossGeometry(2.2, 3.2, 0.2, 0.2), material);
     scene.add(mainCross);
 
-    // Create four smaller crosses
-    const smallCrossGeometry = createCrossGeometry(0.6, 0.6, 0.15);
+    // Create four smaller crosses - skinnier
+    const smallCrossGeometry = createCrossGeometry(0.4, 0.4, 0.15, 0.08);
+    
+    // Position in center of each quadrant
+    // Main cross extends to ±1.1 horizontally and ±1.6 vertically
+    // So center of quadrants would be at:
     const positions = [
-      { x: 0.7, y: 0.7 },   // Top right
-      { x: -0.7, y: 0.7 },  // Top left
-      { x: 0.7, y: -0.7 },  // Bottom right
-      { x: -0.7, y: -0.7 }  // Bottom left
+      { x: 0.8, y: 1.0 },   // Top right quadrant center
+      { x: -0.8, y: 1.0 },  // Top left quadrant center
+      { x: 0.8, y: -1.0 },  // Bottom right quadrant center
+      { x: -0.8, y: -1.0 }  // Bottom left quadrant center
     ];
 
     const smallCrosses = positions.map(pos => {
@@ -101,21 +134,85 @@ const JerusalemCross: React.FC<{ className?: string }> = ({ className = '' }) =>
       return cross;
     });
 
-    smallCrosses.forEach(cross => scene.add(cross));
-
     // Create a group for rotation
     const crossGroup = new THREE.Group();
     crossGroup.add(mainCross);
     smallCrosses.forEach(cross => crossGroup.add(cross));
     scene.add(crossGroup);
+    
+    // Raycaster for mouse interaction
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    
+    // Handle mouse move for cursor
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!mountRef.current) return;
+      
+      const rect = mountRef.current.getBoundingClientRect();
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(smallCrosses);
+      
+      mountRef.current.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
+    };
+    
+    // Handle mouse click
+    const handleClick = (event: MouseEvent) => {
+      if (!mountRef.current) return;
+      
+      const rect = mountRef.current.getBoundingClientRect();
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      
+      raycaster.setFromCamera(mouse, camera);
+      
+      // Check intersection with small crosses
+      const intersects = raycaster.intersectObjects(smallCrosses, true);
+      
+      if (intersects.length > 0) {
+        const clickedCross = intersects[0].object;
+        const crossIndex = smallCrosses.indexOf(clickedCross as THREE.Mesh);
+        
+        if (crossIndex !== -1) {
+          // Apply impulse to the clicked cross
+          crossPhysics[crossIndex].velocity += 0.5;
+          crossPhysics[crossIndex].amplitude = 3; // Increase amplitude temporarily
+        }
+      }
+    };
+    
+    mountRef.current.addEventListener('click', handleClick);
+    mountRef.current.addEventListener('mousemove', handleMouseMove);
 
     // Animation
     const animate = () => {
       requestAnimationFrame(animate);
       
-      // Gentle rotation
+      // Gentle rotation for the entire group
       crossGroup.rotation.y += 0.005;
       crossGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
+      
+      // Physics-based swinging motion for small crosses
+      const time = Date.now() * 0.001;
+      smallCrosses.forEach((cross, index) => {
+        const physics = crossPhysics[index];
+        const phaseOffset = index * Math.PI * 0.5;
+        
+        // Update physics
+        physics.velocity *= physics.damping;
+        physics.amplitude = Math.max(1, physics.amplitude * 0.98); // Gradually return to normal
+        
+        // Base swinging with physics amplification
+        const swingAmplitude = 0.15 * physics.amplitude;
+        const swayAmplitude = 0.1 * physics.amplitude;
+        
+        // Apply physics velocity to rotation
+        cross.rotation.x = Math.sin(time * 1.2 + phaseOffset + physics.velocity) * swingAmplitude;
+        cross.rotation.z = Math.sin(time * 0.8 + phaseOffset + Math.PI * 0.25) * swayAmplitude;
+        cross.rotation.y = Math.sin(time * 0.6 + phaseOffset) * 0.05 * physics.amplitude;
+      });
       
       renderer.render(scene, camera);
     };
@@ -136,6 +233,8 @@ const JerusalemCross: React.FC<{ className?: string }> = ({ className = '' }) =>
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
+      mountRef.current?.removeEventListener('click', handleClick);
+      mountRef.current?.removeEventListener('mousemove', handleMouseMove);
       mountRef.current?.removeChild(renderer.domElement);
       renderer.dispose();
     };
