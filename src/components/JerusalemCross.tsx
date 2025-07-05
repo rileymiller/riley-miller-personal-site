@@ -126,13 +126,13 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
 
       // Create main cross - thin and tall
       const mainCross = new THREE.Mesh(
-        createCrossGeometry(2.2, 3.2, 0.2, 0.2),
+        createCrossGeometry(2.8, 2.8, 0.2, 0.15),
         material
       )
       scene.add(mainCross)
 
       // Create four smaller crosses - skinnier
-      const smallCrossGeometry = createCrossGeometry(0.4, 0.4, 0.15, 0.08)
+      const smallCrossGeometry = createCrossGeometry(0.4, 0.4, 0.15, 0.04)
 
       // Position in center of each quadrant
       // Main cross extends to ±1.1 horizontally and ±1.6 vertically
@@ -215,8 +215,8 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         requestAnimationFrame(animate)
 
         // Gentle rotation for the entire group
-        crossGroup.rotation.y += 0.005
-        crossGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1
+        // crossGroup.rotation.y += 0.005
+        // crossGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1
 
         // Physics-based swinging motion for small crosses with mouse following
         const time = Date.now() * 0.001
