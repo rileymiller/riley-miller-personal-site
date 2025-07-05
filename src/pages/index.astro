@@ -1,63 +1,71 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-import JerusalemCross from '../components/JerusalemCross.tsx';
+import Layout from "../layouts/Layout.astro"
+import { getCollection } from "astro:content"
+import JerusalemCross from "../components/JerusalemCross.tsx"
 
-const posts = await getCollection('blog', ({ data }) => {
-  return data.draft !== true;
-});
+const posts = await getCollection("blog", ({ data }) => {
+  return data.draft !== true
+})
 
 // Sort posts by date, newest first
-posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 
 // Get recent posts for homepage
-const recentPosts = posts.slice(0, 5);
+const recentPosts = posts.slice(0, 5)
 ---
 
 <Layout title="Riley Miller">
   <div class="relative min-h-screen">
     <!-- Desktop Layout -->
-    <div class="hidden lg:flex items-center justify-center min-h-screen">
+    <div
+      class="hidden lg:flex items-center justify-center lg:gap-16 min-h-screen"
+    >
       <!-- Hero Section - Left Side -->
-      <div class="w-1/2 flex justify-end pr-16">
+      <div class="w-2/5 flex justify-end">
         <section class="max-w-md text-left">
-          <h1 class="text-5xl mb-4 font-normal">
-            Riley Miller
-          </h1>
+          <h1 class="text-5xl mb-4 font-normal">Riley Miller</h1>
           <p class="text-lg text-[var(--text-secondary)] mb-2">
-            Staff AI Engineer at <a href="https://getbreezyapp.com/" target="_blank" rel="noopener noreferrer" class="text-[var(--text-primary)] hover:underline">Breezy</a>
+            Staff AI Engineer at <a
+              href="https://getbreezyapp.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--text-primary)] hover:underline">Breezy</a
+            >
           </p>
           <p class="text-[var(--text-secondary)]">
             Customer-obsessed Product Engineer who ships
           </p>
         </section>
       </div>
-      
+
       <!-- Jerusalem Cross - Right Side -->
-      <div class="w-1/2 flex justify-start pl-16">
-        <div class="w-[500px] h-[500px] opacity-80">
+      <div class="w-3/5 flex justify-start">
+        <div class="w-[600px] h-[500px] flex-1 opacity-80">
           <JerusalemCross client:load />
         </div>
       </div>
     </div>
-    
+
     <!-- Mobile Layout -->
-    <div class="lg:hidden relative">
-      <!-- Jerusalem Cross Background -->
-      <div class="fixed inset-0 flex items-center justify-center opacity-30 pointer-events-none">
-        <div class="w-[400px] h-[400px]">
+    <div class="lg:hidden flex flex-col items-center min-h-screen">
+      <!-- Jerusalem Cross - Top -->
+      <div class="pt-16 pb-8">
+        <div class="w-[150px] h-[150px] opacity-80">
           <JerusalemCross client:load />
         </div>
       </div>
-      
+
       <!-- Hero Section -->
-      <div class="relative z-10 py-32 px-6">
+      <div class="px-6 pb-16">
         <section class="text-center">
-          <h1 class="text-4xl mb-4 font-normal">
-            Riley Miller
-          </h1>
+          <h1 class="text-4xl mb-4 font-normal">Riley Miller</h1>
           <p class="text-lg text-[var(--text-secondary)] mb-2">
-            Staff AI Engineer at <a href="https://getbreezyapp.com/" target="_blank" rel="noopener noreferrer" class="text-[var(--text-primary)] hover:underline">Breezy</a>
+            Staff AI Engineer at <a
+              href="https://getbreezyapp.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--text-primary)] hover:underline">Breezy</a
+            >
           </p>
           <p class="text-[var(--text-secondary)]">
             Customer-obsessed Product Engineer who ships
