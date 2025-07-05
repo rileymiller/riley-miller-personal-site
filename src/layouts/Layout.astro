@@ -49,7 +49,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body>
     <div class="min-h-screen flex flex-col">
-      <header class="py-8">
+      <header class="sticky top-0 z-50 bg-[var(--bg-primary)] backdrop-blur-sm py-8 border-b border-[var(--border-glass)]">
         <nav class="container mx-auto px-6">
           <div class="flex items-center">
             <a href="/" class="text-lg font-bold hover:text-[var(--text-primary)] transition-colors">
