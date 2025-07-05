@@ -41,34 +41,31 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       renderer.setPixelRatio(window.devicePixelRatio)
       mountRef.current.appendChild(renderer.domElement)
 
-      // Enhanced lighting for black metallic reflections
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.2)
+      // Minimal ambient light
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.1)
       scene.add(ambientLight)
 
-      // Key light - stronger for black material
-      const keyLight = new THREE.DirectionalLight(0xffffff, 1.5)
-      keyLight.position.set(5, 10, 5)
-      keyLight.castShadow = true
-      scene.add(keyLight)
+      // Main spotlight from top right to bottom left
+      const spotlight = new THREE.SpotLight(0xffffff, 2.5)
+      spotlight.position.set(8, 8, 10) // Top right position
+      spotlight.target.position.set(-2, -2, 0) // Aim toward bottom left
+      spotlight.angle = Math.PI / 6 // 30 degree cone
+      spotlight.penumbra = 0.3 // Soft edges
+      spotlight.decay = 1.5
+      spotlight.distance = 30
+      spotlight.castShadow = true
+      scene.add(spotlight)
+      scene.add(spotlight.target)
 
-      // Fill light
-      const fillLight = new THREE.DirectionalLight(0xffffff, 0.8)
-      fillLight.position.set(-5, 0, 5)
+      // Subtle fill light to prevent complete darkness
+      const fillLight = new THREE.DirectionalLight(0xffffff, 0.3)
+      fillLight.position.set(-5, -5, 5)
       scene.add(fillLight)
 
-      // Rim light for edge highlights - crucial for black objects
-      const rimLight = new THREE.DirectionalLight(0xffffff, 1.2)
-      rimLight.position.set(0, 5, -10)
+      // Rim light for edge definition
+      const rimLight = new THREE.DirectionalLight(0xffffff, 0.5)
+      rimLight.position.set(0, 0, -10)
       scene.add(rimLight)
-
-      // Point lights for specular highlights
-      const pointLight1 = new THREE.PointLight(0xffffff, 0.5)
-      pointLight1.position.set(10, 10, 10)
-      scene.add(pointLight1)
-
-      const pointLight2 = new THREE.PointLight(0xffffff, 0.3)
-      pointLight2.position.set(-10, -10, 10)
-      scene.add(pointLight2)
 
       // Create Potent Cross Geometry with bookends (potent cross)
       const createPotentCrossGeometry = (
@@ -128,9 +125,9 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         const extrudeSettings = {
           depth: depth,
           bevelEnabled: true,
-          bevelThickness: 0.02,
-          bevelSize: 0.02,
-          bevelSegments: 8,
+          bevelThickness: 0.05,
+          bevelSize: 0.05,
+          bevelSegments: 16,
         }
 
         return new THREE.ExtrudeGeometry(shape, extrudeSettings)
@@ -166,17 +163,61 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         const extrudeSettings = {
           depth: depth,
           bevelEnabled: true,
-          bevelThickness: 0.02,
-          bevelSize: 0.02,
-          bevelSegments: 8,
+          bevelThickness: 0.05,
+          bevelSize: 0.05,
+          bevelSegments: 16,
         }
 
         return new THREE.ExtrudeGeometry(shape, extrudeSettings)
       }
 
-      // Shiny jet black material with texture
+      // Create white bump map for jet black surface
+      const textureSize = 512
+      const bumpCanvas = document.createElement('canvas')
+      bumpCanvas.width = textureSize
+      bumpCanvas.height = textureSize
+      const bumpCtx = bumpCanvas.getContext('2d')!
+      
+      // Black background (no bump)
+      bumpCtx.fillStyle = '#000000'
+      bumpCtx.fillRect(0, 0, textureSize, textureSize)
+      
+      // White raised bumps
+      const bumpRadius = 20
+      const spacing = 48
+      
+      for (let x = bumpRadius; x < textureSize; x += spacing) {
+        for (let y = bumpRadius; y < textureSize; y += spacing) {
+          // Add some offset for organic feel
+          const offsetX = (Math.random() - 0.5) * 4
+          const offsetY = (Math.random() - 0.5) * 4
+          
+          // Create gradient for raised bump effect (white = raised)
+          const gradient = bumpCtx.createRadialGradient(
+            x + offsetX, y + offsetY, 0,
+            x + offsetX, y + offsetY, bumpRadius
+          )
+          gradient.addColorStop(0, '#ffffff')
+          gradient.addColorStop(0.7, '#808080')
+          gradient.addColorStop(1, '#000000')
+          
+          bumpCtx.fillStyle = gradient
+          bumpCtx.beginPath()
+          bumpCtx.arc(x + offsetX, y + offsetY, bumpRadius, 0, Math.PI * 2)
+          bumpCtx.fill()
+        }
+      }
+      
+      const bumpTexture = new THREE.CanvasTexture(bumpCanvas)
+      bumpTexture.wrapS = THREE.RepeatWrapping
+      bumpTexture.wrapT = THREE.RepeatWrapping
+      bumpTexture.repeat.set(2, 2)
+
+      // Jet black material with white bump texture
       const material = new THREE.MeshPhysicalMaterial({
         color: 0x0a0a0a, // Very dark gray/black
+        bumpMap: bumpTexture, // White bumps on black surface
+        bumpScale: 0.05,
         emissive: 0x000000,
         emissiveIntensity: 0.0,
         metalness: 0.95,
@@ -185,10 +226,8 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         clearcoatRoughness: 0.0,
         reflectivity: 1.0,
         ior: 2.4,
-        // Add anisotropy for brushed metal texture effect
         anisotropy: 0.8,
         anisotropyRotation: Math.PI / 4,
-        // Sheen for subtle surface variation
         sheen: 0.3,
         sheenRoughness: 0.2,
         sheenColor: 0x111111,
@@ -259,9 +298,9 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       const animate = () => {
         requestAnimationFrame(animate)
 
-        // Gentle rotation for the entire group
-        crossGroup.rotation.y += 0.005
-        crossGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1
+        // Very subtle rotation for the entire group
+        crossGroup.rotation.y += 0.001
+        crossGroup.rotation.x = Math.sin(Date.now() * 0.0005) * 0.02
         
         // Physics-based swinging motion for small crosses with mouse following
         const time = Date.now() * 0.001
@@ -273,9 +312,9 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
           physics.velocity *= physics.damping
           physics.amplitude = Math.max(1, physics.amplitude * 0.98) // Gradually return to normal
 
-          // Base swinging with physics amplification
-          const swingAmplitude = 0.15 * physics.amplitude
-          const swayAmplitude = 0.1 * physics.amplitude
+          // Reduced swinging motion
+          const swingAmplitude = 0.05 * physics.amplitude
+          const swayAmplitude = 0.03 * physics.amplitude
 
           // Calculate direction from cross to mouse
           const crossWorldPos = new THREE.Vector3()
@@ -286,7 +325,7 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
             .normalize()
 
           // Calculate tilt angles based on mouse direction
-          const tiltStrength = 0.3 // How much the crosses tilt
+          const tiltStrength = 0.15 // Reduced tilt strength
           const targetTiltX = dirToMouse.y * tiltStrength
           const targetTiltZ = -dirToMouse.x * tiltStrength
 
