@@ -41,23 +41,23 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       renderer.setPixelRatio(window.devicePixelRatio)
       mountRef.current.appendChild(renderer.domElement)
 
-      // Enhanced lighting for metallic reflections
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.3)
+      // Enhanced lighting for black metallic reflections
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.2)
       scene.add(ambientLight)
 
-      // Key light
-      const keyLight = new THREE.DirectionalLight(0xffffff, 1.2)
+      // Key light - stronger for black material
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.5)
       keyLight.position.set(5, 10, 5)
       keyLight.castShadow = true
       scene.add(keyLight)
 
       // Fill light
-      const fillLight = new THREE.DirectionalLight(0xffffff, 0.6)
+      const fillLight = new THREE.DirectionalLight(0xffffff, 0.8)
       fillLight.position.set(-5, 0, 5)
       scene.add(fillLight)
 
-      // Rim light for edge highlights
-      const rimLight = new THREE.DirectionalLight(0xffffff, 0.8)
+      // Rim light for edge highlights - crucial for black objects
+      const rimLight = new THREE.DirectionalLight(0xffffff, 1.2)
       rimLight.position.set(0, 5, -10)
       scene.add(rimLight)
 
@@ -174,20 +174,24 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         return new THREE.ExtrudeGeometry(shape, extrudeSettings)
       }
 
-      // Iridescent metallic material
+      // Shiny jet black material with texture
       const material = new THREE.MeshPhysicalMaterial({
-        color: 0xffffff,
-        emissive: 0x222222,
-        emissiveIntensity: 0.1,
-        metalness: 0.9,
-        roughness: 0.1,
+        color: 0x0a0a0a, // Very dark gray/black
+        emissive: 0x000000,
+        emissiveIntensity: 0.0,
+        metalness: 0.95,
+        roughness: 0.05, // Very low for high gloss
         clearcoat: 1.0,
         clearcoatRoughness: 0.0,
         reflectivity: 1.0,
-        ior: 2.5,
-        iridescence: 1.0,
-        iridescenceIOR: 2.0,
-        iridescenceThicknessRange: [100, 400],
+        ior: 2.4,
+        // Add anisotropy for brushed metal texture effect
+        anisotropy: 0.8,
+        anisotropyRotation: Math.PI / 4,
+        // Sheen for subtle surface variation
+        sheen: 0.3,
+        sheenRoughness: 0.2,
+        sheenColor: 0x111111,
       })
 
       // Create main cross - thin and tall
