@@ -23,6 +23,12 @@
     --accent-secondary: #2DD4BF;
     --accent-glow: 0 0 20px rgba(94, 234, 212, 0.2);
     
+    /* Gold colors */
+    --gold: #FFD700;
+    --gold-light: #FFE55C;
+    --gold-dark: #B8860B;
+    --gold-glow: 0 0 20px rgba(255, 215, 0, 0.4);
+    
     /* Borders and effects - minimal */
     --border-glass: rgba(255, 255, 255, 0.08);
     --shadow-glass: 0 2px 8px rgba(0, 0, 0, 0.1);
