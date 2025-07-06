@@ -11,6 +11,11 @@ export default {
         },
         'primary': '#3b82f6',
         'secondary': '#60a5fa',
+        'gold': {
+          'DEFAULT': '#FFD700',
+          'light': '#FFE55C',
+          'dark': '#B8860B',
+        },
       },
       backdropBlur: {
         'glass': '10px',

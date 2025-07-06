@@ -57,6 +57,11 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       scene.add(spotlight)
       scene.add(spotlight.target)
 
+      // Add brighter white light to enhance white piping
+      const whiteLight = new THREE.PointLight(0xffffff, 0.5, 20)
+      whiteLight.position.set(0, 0, 5)
+      scene.add(whiteLight)
+
       // Subtle fill light to prevent complete darkness
       const fillLight = new THREE.DirectionalLight(0xffffff, 0.3)
       fillLight.position.set(-5, -5, 5)
@@ -173,41 +178,45 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
 
       // Create white bump map for jet black surface
       const textureSize = 512
-      const bumpCanvas = document.createElement('canvas')
+      const bumpCanvas = document.createElement("canvas")
       bumpCanvas.width = textureSize
       bumpCanvas.height = textureSize
-      const bumpCtx = bumpCanvas.getContext('2d')!
-      
+      const bumpCtx = bumpCanvas.getContext("2d")!
+
       // Black background (no bump)
-      bumpCtx.fillStyle = '#000000'
+      bumpCtx.fillStyle = "#000000"
       bumpCtx.fillRect(0, 0, textureSize, textureSize)
-      
+
       // White raised bumps
       const bumpRadius = 20
       const spacing = 48
-      
+
       for (let x = bumpRadius; x < textureSize; x += spacing) {
         for (let y = bumpRadius; y < textureSize; y += spacing) {
           // Add some offset for organic feel
           const offsetX = (Math.random() - 0.5) * 4
           const offsetY = (Math.random() - 0.5) * 4
-          
+
           // Create gradient for raised bump effect (white = raised)
           const gradient = bumpCtx.createRadialGradient(
-            x + offsetX, y + offsetY, 0,
-            x + offsetX, y + offsetY, bumpRadius
+            x + offsetX,
+            y + offsetY,
+            0,
+            x + offsetX,
+            y + offsetY,
+            bumpRadius
           )
-          gradient.addColorStop(0, '#ffffff')
-          gradient.addColorStop(0.7, '#808080')
-          gradient.addColorStop(1, '#000000')
-          
+          gradient.addColorStop(0, "#ffffff")
+          gradient.addColorStop(0.7, "#808080")
+          gradient.addColorStop(1, "#000000")
+
           bumpCtx.fillStyle = gradient
           bumpCtx.beginPath()
           bumpCtx.arc(x + offsetX, y + offsetY, bumpRadius, 0, Math.PI * 2)
           bumpCtx.fill()
         }
       }
-      
+
       const bumpTexture = new THREE.CanvasTexture(bumpCanvas)
       bumpTexture.wrapS = THREE.RepeatWrapping
       bumpTexture.wrapT = THREE.RepeatWrapping
@@ -233,12 +242,70 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         sheenColor: 0x111111,
       })
 
+      // White material for edge piping - clean and bright
+      const whiteMaterial = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff, // White
+        emissive: 0xffffff,
+        emissiveIntensity: 1, // Increased brightness
+        metalness: 0.0,
+        roughness: 0.0, // Smoother for more shine
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.0,
+        reflectivity: 1.0,
+      })
+
+      // Helper function to create white piping on all edges
+      const createWhitePiping = (
+        geometry: THREE.ExtrudeGeometry,
+        thickness: number = 0.02
+      ) => {
+        // Create edges geometry for all edges
+        const edges = new THREE.EdgesGeometry(geometry, 1) // Low angle to get ALL edges
+
+        // Convert edges to a tube geometry for thick piping
+        const pipingGroup = new THREE.Group()
+
+        // Get positions from edges geometry
+        const positions = edges.attributes.position.array
+
+        // Create tubes for each edge
+        for (let i = 0; i < positions.length; i += 6) {
+          const start = new THREE.Vector3(
+            positions[i],
+            positions[i + 1],
+            positions[i + 2]
+          )
+          const end = new THREE.Vector3(
+            positions[i + 3],
+            positions[i + 4],
+            positions[i + 5]
+          )
+
+          // Create path for tube
+          const path = new THREE.LineCurve3(start, end)
+          const tubeGeometry = new THREE.TubeGeometry(
+            path,
+            2,
+            thickness,
+            8,
+            false
+          )
+
+          const tubeMesh = new THREE.Mesh(tubeGeometry, whiteMaterial)
+          pipingGroup.add(tubeMesh)
+        }
+
+        return pipingGroup
+      }
+
       // Create main cross - thin and tall
-      const mainCross = new THREE.Mesh(
-        createPotentCrossGeometry(2.8, 2.8, 0.2, 0.15),
-        material
-      )
+      const mainCrossGeometry = createPotentCrossGeometry(2.8, 2.8, 0.2, 0.15)
+      const mainCross = new THREE.Mesh(mainCrossGeometry, material)
       scene.add(mainCross)
+
+      // Add white piping to main cross
+      const mainCrossPiping = createWhitePiping(mainCrossGeometry, 0.008) // Thin piping
+      mainCross.add(mainCrossPiping)
 
       // Create four smaller crosses - skinnier
       const smallCrossGeometry = createGreekCrossGeometry(0.5, 0.5, 0.15, 0.04)
@@ -257,6 +324,11 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       const smallCrosses = positions.map(pos => {
         const cross = new THREE.Mesh(smallCrossGeometry, material)
         cross.position.set(pos.x, pos.y, 0.1)
+
+        // Add white piping to small cross
+        const smallCrossPiping = createWhitePiping(smallCrossGeometry, 0.005) // Very thin piping
+        cross.add(smallCrossPiping)
+
         return cross
       })
 
@@ -298,10 +370,14 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       const animate = () => {
         requestAnimationFrame(animate)
 
-        // Very subtle rotation for the entire group
-        crossGroup.rotation.y += 0.001
+        // Pan back and forth across 90 degrees (π/2 radians)
+        const panTime = Date.now() * 0.0003 // Slower panning speed
+        const panAngle = Math.sin(panTime) * (Math.PI / 4) // -45° to +45° = 90° total
+        crossGroup.rotation.y = panAngle
+
+        // Keep subtle vertical tilt
         crossGroup.rotation.x = Math.sin(Date.now() * 0.0005) * 0.02
-        
+
         // Physics-based swinging motion for small crosses with mouse following
         const time = Date.now() * 0.001
         smallCrosses.forEach((cross, index) => {
