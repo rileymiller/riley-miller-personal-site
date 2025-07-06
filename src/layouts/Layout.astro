@@ -42,34 +42,34 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="Riley Miller's Blog" href="/rss.xml" />
     
-    <!-- Inter font -->
+    <!-- Inter Variable font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-gradient-to-br from-stone-50 via-white to-stone-50">
+  <body class="bg-gradient-to-br from-gray-950 via-black to-gray-950">
     <div class="min-h-screen flex flex-col relative overflow-hidden">
       <!-- Global background light effect -->
       <div class="fixed inset-0 flex items-center justify-center pointer-events-none">
-        <div class="w-[1000px] h-[1000px] bg-black/[0.02] rounded-full blur-3xl"></div>
-        <div class="absolute w-[800px] h-[800px] bg-gray-600/[0.02] rounded-full blur-3xl animate-pulse"></div>
+        <div class="w-[1000px] h-[1000px] bg-white/[0.05] rounded-full blur-3xl"></div>
+        <div class="absolute w-[800px] h-[800px] bg-gray-400/[0.05] rounded-full blur-3xl animate-pulse"></div>
       </div>
       
-      <header class="sticky top-0 z-50 backdrop-blur-md py-4 border-b border-black/10">
+      <header class="sticky top-0 z-50 backdrop-blur-md py-4 border-b border-white/10">
         <nav class="container mx-auto px-6">
           <div class="flex items-center">
-            <a href="/" class="text-lg font-bold text-black hover:text-gray-600 transition-colors">
+            <a href="/" class="text-lg font-bold text-white hover:text-gray-300 transition-colors">
               RM
             </a>
             <div class="flex-1 flex justify-center items-center gap-8 text-sm">
-              <a href="/" class="text-gray-600 hover:text-black transition-colors">Home</a>
-              <a href="/blog" class="text-gray-600 hover:text-black transition-colors">Blog</a>
-              <a href="/about" class="text-gray-600 hover:text-black transition-colors">About</a>
+              <a href="/" class="text-gray-300 hover:text-white transition-colors">Home</a>
+              <a href="/blog" class="text-gray-300 hover:text-white transition-colors">Blog</a>
+              <a href="/about" class="text-gray-300 hover:text-white transition-colors">About</a>
               <a 
                 href="https://github.com/rileymiller" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                class="text-gray-600 hover:text-black transition-colors"
+                class="text-gray-300 hover:text-white transition-colors"
               >
                 GitHub
               </a>
@@ -86,11 +86,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       <footer class="py-12 mt-auto relative z-10">
         <div class="container mx-auto px-6">
-          <div class="flex justify-center gap-6 text-sm text-gray-500">
-            <a href="mailto:rmllr000@gmail.com" class="hover:text-black transition-colors">email</a>
-            <a href="https://twitter.com/riley_miller00" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors">twitter</a>
-            <a href="https://github.com/rileymiller" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors">github</a>
-            <a href="https://linkedin.com/in/rileymiller00" target="_blank" rel="noopener noreferrer" class="hover:text-black transition-colors">linkedin</a>
+          <div class="flex justify-center gap-6 text-sm text-gray-400">
+            <a href="mailto:rmllr000@gmail.com" class="hover:text-white transition-colors">email</a>
+            <a href="https://twitter.com/riley_miller00" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">twitter</a>
+            <a href="https://github.com/rileymiller" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">github</a>
+            <a href="https://linkedin.com/in/rileymiller00" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">linkedin</a>
           </div>
         </div>
       </footer>
