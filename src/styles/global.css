@@ -4,34 +4,34 @@
 
 @layer base {
   :root {
-    /* Dark mode colors - more subtle and professional */
-    --bg-primary: #000000;
-    --bg-secondary: #0a0a0a;
-    --bg-tertiary: #111111;
+    /* Light mode colors - off-white background with jet black text */
+    --bg-primary: #FAFAF9;
+    --bg-secondary: #F5F5F4;
+    --bg-tertiary: #EFEFEE;
     
-    /* Glass effect backgrounds - more subtle */
-    --bg-glass: rgba(255, 255, 255, 0.02);
-    --bg-glass-hover: rgba(255, 255, 255, 0.04);
+    /* Glass effect backgrounds - subtle dark overlays */
+    --bg-glass: rgba(0, 0, 0, 0.02);
+    --bg-glass-hover: rgba(0, 0, 0, 0.04);
     
-    /* Text colors - softer contrast */
-    --text-primary: #ffffff;
-    --text-secondary: #888888;
-    --text-muted: #666666;
+    /* Text colors - jet black with gray variations */
+    --text-primary: #0A0A0A;
+    --text-secondary: #404040;
+    --text-muted: #606060;
     
-    /* Accent colors - subtle teal/cyan for highlights */
-    --accent-primary: #5EEAD4;
-    --accent-secondary: #2DD4BF;
-    --accent-glow: 0 0 20px rgba(94, 234, 212, 0.2);
+    /* Accent colors - adjusted for light background */
+    --accent-primary: #0891B2;
+    --accent-secondary: #0E7490;
+    --accent-glow: 0 0 20px rgba(8, 145, 178, 0.3);
     
-    /* Gold colors */
-    --gold: #FFD700;
-    --gold-light: #FFE55C;
+    /* Gold colors - slightly darker for better contrast */
+    --gold: #D4A017;
+    --gold-light: #E3B505;
     --gold-dark: #B8860B;
-    --gold-glow: 0 0 20px rgba(255, 215, 0, 0.4);
+    --gold-glow: 0 0 20px rgba(212, 160, 23, 0.4);
     
-    /* Borders and effects - minimal */
-    --border-glass: rgba(255, 255, 255, 0.08);
-    --shadow-glass: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* Borders and effects - subtle dark borders */
+    --border-glass: rgba(0, 0, 0, 0.08);
+    --shadow-glass: 0 2px 8px rgba(0, 0, 0, 0.05);
     --blur-glass: blur(8px);
   }
 
@@ -51,7 +51,7 @@
 
   /* Selection styling */
   ::selection {
-    @apply bg-white/20 text-white;
+    @apply bg-black/20 text-black;
   }
 
   /* Scrollbar styling */
