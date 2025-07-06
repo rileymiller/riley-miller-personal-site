@@ -222,9 +222,9 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       bumpTexture.wrapT = THREE.RepeatWrapping
       bumpTexture.repeat.set(2, 2)
 
-      // Jet black material
+      // Jet black material with white bump texture
       const material = new THREE.MeshPhysicalMaterial({
-        color: 0x0A0A0A, // Jet black matching the CSS
+        color: 0x0a0a0a, // Very dark gray/black
         bumpMap: bumpTexture, // White bumps on black surface
         bumpScale: 0.05,
         emissive: 0x000000,
@@ -303,7 +303,9 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       const mainCross = new THREE.Mesh(mainCrossGeometry, material)
       scene.add(mainCross)
 
-      // No white piping - removed for cleaner look
+      // Add white piping to main cross
+      const mainCrossPiping = createWhitePiping(mainCrossGeometry, 0.008) // Thin piping
+      mainCross.add(mainCrossPiping)
 
       // Create four smaller crosses - skinnier
       const smallCrossGeometry = createGreekCrossGeometry(0.5, 0.5, 0.15, 0.04)
@@ -323,7 +325,9 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         const cross = new THREE.Mesh(smallCrossGeometry, material)
         cross.position.set(pos.x, pos.y, 0.1)
 
-        // No white piping - removed for cleaner look
+        // Add white piping to small cross
+        const smallCrossPiping = createWhitePiping(smallCrossGeometry, 0.005) // Very thin piping
+        cross.add(smallCrossPiping)
 
         return cross
       })
