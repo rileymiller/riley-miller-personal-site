@@ -28,6 +28,17 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       // Scene setup
       const scene = new THREE.Scene()
       scene.background = null // Transparent background
+      
+      // Add a subtle shadow plane
+      const shadowPlaneGeometry = new THREE.PlaneGeometry(10, 10)
+      const shadowPlaneMaterial = new THREE.ShadowMaterial({
+        opacity: 0.3,
+      })
+      const shadowPlane = new THREE.Mesh(shadowPlaneGeometry, shadowPlaneMaterial)
+      shadowPlane.rotation.x = -Math.PI / 2
+      shadowPlane.position.y = -2
+      shadowPlane.receiveShadow = true
+      scene.add(shadowPlane)
 
       const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000)
       camera.position.z = 5
@@ -35,42 +46,45 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       const renderer = new THREE.WebGLRenderer({
         antialias: true,
         alpha: true, // Enable transparency
+        shadowMap: {
+          enabled: true,
+          type: THREE.PCFSoftShadowMap,
+        },
       })
+      renderer.shadowMap.enabled = true
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
       renderer.setSize(width, height)
       renderer.setPixelRatio(window.devicePixelRatio)
       mountRef.current.appendChild(renderer.domElement)
 
-      // Minimal ambient light
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.1)
+      // Soft ambient light for bone white
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
       scene.add(ambientLight)
 
-      // Main spotlight from top right to bottom left
-      const spotlight = new THREE.SpotLight(0xffffff, 2.5)
-      spotlight.position.set(8, 8, 10) // Top right position
-      spotlight.target.position.set(-2, -2, 0) // Aim toward bottom left
-      spotlight.angle = Math.PI / 6 // 30 degree cone
-      spotlight.penumbra = 0.3 // Soft edges
-      spotlight.decay = 1.5
-      spotlight.distance = 30
-      spotlight.castShadow = true
-      scene.add(spotlight)
-      scene.add(spotlight.target)
+      // Main directional light for strong shadows
+      const mainLight = new THREE.DirectionalLight(0xffffff, 1.2)
+      mainLight.position.set(5, 8, 8)
+      mainLight.castShadow = true
+      mainLight.shadow.mapSize.width = 2048
+      mainLight.shadow.mapSize.height = 2048
+      mainLight.shadow.camera.near = 0.5
+      mainLight.shadow.camera.far = 50
+      mainLight.shadow.camera.left = -10
+      mainLight.shadow.camera.right = 10
+      mainLight.shadow.camera.top = 10
+      mainLight.shadow.camera.bottom = -10
+      scene.add(mainLight)
 
-      // Add brighter white light to enhance white piping
-      const whiteLight = new THREE.PointLight(0xffffff, 0.5, 20)
-      whiteLight.position.set(0, 0, 5)
-      scene.add(whiteLight)
-
-      // Subtle fill light to prevent complete darkness
-      const fillLight = new THREE.DirectionalLight(0xffffff, 0.3)
-      fillLight.position.set(-5, -5, 5)
+      // Soft fill light from opposite side
+      const fillLight = new THREE.DirectionalLight(0xfaf5e9, 0.5)
+      fillLight.position.set(-8, 3, 5)
       scene.add(fillLight)
 
-      // Rim light for edge definition
-      const rimLight = new THREE.DirectionalLight(0xffffff, 0.5)
-      rimLight.position.set(0, 0, -10)
-      scene.add(rimLight)
+      // Bottom up light for ambient occlusion effect
+      const bottomLight = new THREE.DirectionalLight(0xe8dcc0, 0.3)
+      bottomLight.position.set(0, -10, 5)
+      scene.add(bottomLight)
 
       // Create Potent Cross Geometry with bookends (potent cross)
       const createPotentCrossGeometry = (
@@ -176,28 +190,28 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
         return new THREE.ExtrudeGeometry(shape, extrudeSettings)
       }
 
-      // Create white bump map for jet black surface
+      // Create subtle texture map for bone white surface
       const textureSize = 512
       const bumpCanvas = document.createElement("canvas")
       bumpCanvas.width = textureSize
       bumpCanvas.height = textureSize
       const bumpCtx = bumpCanvas.getContext("2d")!
 
-      // Black background (no bump)
-      bumpCtx.fillStyle = "#000000"
+      // Light gray background for subtle texture
+      bumpCtx.fillStyle = "#f0f0f0"
       bumpCtx.fillRect(0, 0, textureSize, textureSize)
 
-      // White raised bumps
-      const bumpRadius = 20
-      const spacing = 48
+      // Subtle organic texture
+      const bumpRadius = 15
+      const spacing = 40
 
       for (let x = bumpRadius; x < textureSize; x += spacing) {
         for (let y = bumpRadius; y < textureSize; y += spacing) {
           // Add some offset for organic feel
-          const offsetX = (Math.random() - 0.5) * 4
-          const offsetY = (Math.random() - 0.5) * 4
+          const offsetX = (Math.random() - 0.5) * 6
+          const offsetY = (Math.random() - 0.5) * 6
 
-          // Create gradient for raised bump effect (white = raised)
+          // Create subtle gradient for bone texture
           const gradient = bumpCtx.createRadialGradient(
             x + offsetX,
             y + offsetY,
@@ -207,8 +221,8 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
             bumpRadius
           )
           gradient.addColorStop(0, "#ffffff")
-          gradient.addColorStop(0.7, "#808080")
-          gradient.addColorStop(1, "#000000")
+          gradient.addColorStop(0.5, "#f8f8f8")
+          gradient.addColorStop(1, "#e8e8e8")
 
           bumpCtx.fillStyle = gradient
           bumpCtx.beginPath()
@@ -222,90 +236,31 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       bumpTexture.wrapT = THREE.RepeatWrapping
       bumpTexture.repeat.set(2, 2)
 
-      // Jet black material with white bump texture
+      // Bone white material with subtle texture
       const material = new THREE.MeshPhysicalMaterial({
-        color: 0x0a0a0a, // Very dark gray/black
-        bumpMap: bumpTexture, // White bumps on black surface
-        bumpScale: 0.05,
-        emissive: 0x000000,
-        emissiveIntensity: 0.0,
-        metalness: 0.95,
-        roughness: 0.05, // Very low for high gloss
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.0,
-        reflectivity: 1.0,
-        ior: 2.4,
-        anisotropy: 0.8,
-        anisotropyRotation: Math.PI / 4,
-        sheen: 0.3,
-        sheenRoughness: 0.2,
-        sheenColor: 0x111111,
-      })
-
-      // White material for edge piping - clean and bright
-      const whiteMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0xffffff, // White
+        color: 0xfefefe, // Brighter, almost pure white
+        bumpMap: bumpTexture,
+        bumpScale: 0.02, // Subtle bump
         emissive: 0xffffff,
-        emissiveIntensity: 1, // Increased brightness
-        metalness: 0.0,
-        roughness: 0.0, // Smoother for more shine
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.0,
-        reflectivity: 1.0,
+        emissiveIntensity: 0.08, // Slightly increased self-illumination
+        metalness: 0.0, // Non-metallic for bone appearance
+        roughness: 0.3, // Slightly rough for bone texture
+        clearcoat: 0.3,
+        clearcoatRoughness: 0.2,
+        reflectivity: 0.5,
+        ior: 1.5,
+        sheen: 0.1,
+        sheenRoughness: 0.5,
+        sheenColor: 0xffffff,
       })
 
-      // Helper function to create white piping on all edges
-      const createWhitePiping = (
-        geometry: THREE.ExtrudeGeometry,
-        thickness: number = 0.02
-      ) => {
-        // Create edges geometry for all edges
-        const edges = new THREE.EdgesGeometry(geometry, 1) // Low angle to get ALL edges
-
-        // Convert edges to a tube geometry for thick piping
-        const pipingGroup = new THREE.Group()
-
-        // Get positions from edges geometry
-        const positions = edges.attributes.position.array
-
-        // Create tubes for each edge
-        for (let i = 0; i < positions.length; i += 6) {
-          const start = new THREE.Vector3(
-            positions[i],
-            positions[i + 1],
-            positions[i + 2]
-          )
-          const end = new THREE.Vector3(
-            positions[i + 3],
-            positions[i + 4],
-            positions[i + 5]
-          )
-
-          // Create path for tube
-          const path = new THREE.LineCurve3(start, end)
-          const tubeGeometry = new THREE.TubeGeometry(
-            path,
-            2,
-            thickness,
-            8,
-            false
-          )
-
-          const tubeMesh = new THREE.Mesh(tubeGeometry, whiteMaterial)
-          pipingGroup.add(tubeMesh)
-        }
-
-        return pipingGroup
-      }
 
       // Create main cross - thin and tall
       const mainCrossGeometry = createPotentCrossGeometry(2.8, 2.8, 0.2, 0.15)
       const mainCross = new THREE.Mesh(mainCrossGeometry, material)
+      mainCross.castShadow = true
+      mainCross.receiveShadow = true
       scene.add(mainCross)
-
-      // Add white piping to main cross
-      const mainCrossPiping = createWhitePiping(mainCrossGeometry, 0.008) // Thin piping
-      mainCross.add(mainCrossPiping)
 
       // Create four smaller crosses - skinnier
       const smallCrossGeometry = createGreekCrossGeometry(0.5, 0.5, 0.15, 0.04)
@@ -324,10 +279,8 @@ const JerusalemCross: React.FC<{ className?: string }> = ({
       const smallCrosses = positions.map(pos => {
         const cross = new THREE.Mesh(smallCrossGeometry, material)
         cross.position.set(pos.x, pos.y, 0.1)
-
-        // Add white piping to small cross
-        const smallCrossPiping = createWhitePiping(smallCrossGeometry, 0.005) // Very thin piping
-        cross.add(smallCrossPiping)
+        cross.castShadow = true
+        cross.receiveShadow = true
 
         return cross
       })
