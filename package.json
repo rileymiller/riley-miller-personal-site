@@ -16,17 +16,19 @@
     "@astrojs/rss": "^4.0.10",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.3",
-    "@types/three": "^0.177.0",
+    "@react-three/drei": "^9.117.3",
+    "@react-three/fiber": "^8.17.10",
     "astro": "^4.16.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^3.4.16",
-    "three": "^0.178.0"
+    "three": "^0.170.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
     "@types/react": "^18.3.13",
     "@types/react-dom": "^18.3.1",
+    "@types/three": "^0.178.0",
     "typescript": "^5.7.2"
   }
 }
