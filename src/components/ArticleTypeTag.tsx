@@ -1,4 +1,5 @@
 import { toast } from 'sonner';
+import styles from './ArticleTypeTag.module.css';
 
 interface ArticleTypeTagProps {
   articleType: string;
@@ -14,6 +15,22 @@ export function ArticleTypeTag({ articleType, className = '' }: ArticleTypeTagPr
       duration: 5000,
     });
   };
+
+  const isSnack = articleType.toLowerCase() === 'snack';
+
+  if (isSnack) {
+    return (
+      <span className={styles.shinyWrapper}>
+        <span
+          className={`${className} cursor-pointer select-none block`}
+          onClick={handleClick}
+          style={{ borderRadius: '4px' }}
+        >
+          {articleType}
+        </span>
+      </span>
+    );
+  }
 
   return (
     <span
