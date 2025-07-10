@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { ArticleTypeTag } from '../../components/ArticleTypeTag';
 
 const posts = await getCollection('blog', ({ data }) => {
   return data.draft !== true;
@@ -18,16 +19,37 @@ posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
       {posts.map((post) => (
         <article>
           <a href={`/blog/${post.slug}`} class="group">
-            <h2 class="text-xl mb-2 group-hover:text-[var(--text-primary)] transition-colors">
-              {post.data.title}
+            <h2 class="text-xl mb-2 group-hover:text-[var(--text-primary)] transition-colors flex items-center gap-3">
+              <span>{post.data.title}</span>
+              {post.data.articleType && post.data.articleType !== 'blog' && (
+                <ArticleTypeTag 
+                  articleType={post.data.articleType}
+                  className="text-xs px-2 py-1 bg-[var(--text-primary)] text-[var(--bg-primary)] rounded font-medium"
+                  client:visible
+                />
+              )}
             </h2>
-            <time class="text-sm text-[var(--text-muted)]">
-              {post.data.date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
-            </time>
+            <div class="flex items-center gap-3 flex-wrap">
+              <time class="text-sm text-[var(--text-muted)]">
+                {post.data.date.toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </time>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <>
+                  <span class="text-sm text-[var(--text-muted)]">•</span>
+                  <div class="flex gap-2 flex-wrap">
+                    {post.data.tags.map((tag) => (
+                      <span class="text-xs px-2 py-1 bg-[var(--bg-secondary)] text-[var(--text-secondary)] rounded-full border border-[var(--border-glass)]">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
             <p class="mt-3 text-[var(--text-secondary)]">
               {post.data.description}
             </p>

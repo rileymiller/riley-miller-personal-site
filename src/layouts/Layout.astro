@@ -1,4 +1,6 @@
 ---
+import { Toaster } from '../components/Toaster';
+
 export interface Props {
   title: string;
   description?: string;
@@ -95,6 +97,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         </div>
       </footer>
     </div>
+    <Toaster client:load />
   </body>
 </html>
 

@@ -1,0 +1,31 @@
+@keyframes border-spin {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.shinyWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  background: linear-gradient(90deg, 
+    #ffffff 0%, 
+    #666666 10%, 
+    #ffffff 20%, 
+    #666666 30%, 
+    #ffffff 40%, 
+    #666666 50%, 
+    #ffffff 60%, 
+    #666666 70%, 
+    #ffffff 80%, 
+    #666666 90%, 
+    #ffffff 100%
+  );
+  background-size: 200% 100%;
+  animation: border-spin 3s linear infinite;
+  border-radius: 6px;
+}
