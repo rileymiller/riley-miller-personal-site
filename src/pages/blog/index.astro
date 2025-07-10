@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { ArticleTypeTag } from '../../components/ArticleTypeTag';
 
 const posts = await getCollection('blog', ({ data }) => {
   return data.draft !== true;
@@ -21,12 +22,11 @@ posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
             <h2 class="text-xl mb-2 group-hover:text-[var(--text-primary)] transition-colors flex items-center gap-3">
               <span>{post.data.title}</span>
               {post.data.articleType && post.data.articleType !== 'blog' && (
-                <span 
-                  class="text-xs px-2 py-1 bg-[var(--text-primary)] text-[var(--bg-primary)] rounded font-medium cursor-help"
-                  title="A snack is a short, quick-to-read post that doesn't quite warrant a full blog post"
-                >
-                  {post.data.articleType}
-                </span>
+                <ArticleTypeTag 
+                  articleType={post.data.articleType}
+                  className="text-xs px-2 py-1 bg-[var(--text-primary)] text-[var(--bg-primary)] rounded font-medium"
+                  client:visible
+                />
               )}
             </h2>
             <div class="flex items-center gap-3 flex-wrap">
