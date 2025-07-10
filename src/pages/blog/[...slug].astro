@@ -51,7 +51,17 @@ if (post.data.featuredImage) {
 <Layout title={`${post.data.title} - Riley Miller`} description={post.data.description}>
   <article class="py-20">
     <header class="mb-16">
-      <h1 class="text-4xl mb-4">{post.data.title}</h1>
+      <h1 class="text-4xl mb-4 flex items-center gap-3">
+        <span>{post.data.title}</span>
+        {post.data.articleType && post.data.articleType !== 'blog' && (
+          <span 
+            class="text-sm px-3 py-1 bg-[var(--text-primary)] text-[var(--bg-primary)] rounded font-medium cursor-help"
+            title="A snack is a short, quick-to-read post that doesn't quite warrant a full blog post"
+          >
+            {post.data.articleType}
+          </span>
+        )}
+      </h1>
       <time class="text-sm text-[var(--text-muted)]">
         {post.data.date.toLocaleDateString('en-US', { 
           year: 'numeric', 
